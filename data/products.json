@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "nome": "Moletom STOMP the Stars",
+    "categoria": "moletom",
+    "preco": 79.90,
+    "imagem": "/imgs/moletom1.png",
+    "descricao": "Moletom premium oversized 100% algodão."
+  },
+  {
+    "id": 2,
+    "nome": "Camiseta STOMP the Stars",
+    "categoria": "camiseta",
+    "preco": 59.90,
+    "imagem": "/imgs/camiseta1.png",
+    "descricao": "Camiseta streetwear modelagem boxy."
+  }
+]

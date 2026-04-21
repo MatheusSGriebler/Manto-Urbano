@@ -1,0 +1,235 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Header superior */
+#header {
+    background-color: black;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#header h1 {
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Barra principal */
+#bar {
+    background-color: white;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 170px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+/* Menu esquerdo */
+#bar > ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+/* Itens principais */
+#bar > ul > li {
+    position: relative;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+/* Links do menu */
+#bar > ul > li > a {
+    display: block;
+    padding: 15px 0;
+    text-decoration: none;
+    color: black;
+    transition: color 0.2s ease;
+}
+
+/* Hover texto */
+#bar > ul > li:hover > a {
+    color: #4b4b4b;
+}
+
+/* Linha animada */
+#bar > ul > li::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 8px;
+    width: 0;
+    height: 2px;
+    background: black;
+    transition: width 0.3s ease;
+}
+
+#bar > ul > li:hover::after {
+    width: 100%;
+}
+
+/* Submenu */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    padding: 10px 0;
+    list-style: none;
+}
+
+.loja:hover .submenu {
+    display: block;
+}
+
+.submenu li a {
+    display: block;
+    padding: 10px 20px;
+    font-size: 14px;
+    text-decoration: none;
+    color: black;
+}
+
+.submenu li:hover {
+    background-color: #f5f5f5;
+}
+
+/* Menu direito */
+.menu-right {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin-left: auto;
+}
+
+.menu-right i {
+    font-size: 18px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.menu-right i:hover {
+    color: #4b4b4b;
+}
+
+/* Logo central */
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    max-height: 60%;
+}
+
+/* Conteúdo */
+/* Card de login */
+#conteudo {
+    width: 400px;
+    padding: 60px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* Título */
+#conteudo h1 {
+    font-size: 18px;
+    margin-bottom: 25px;
+    text-decoration: none;
+}
+
+/* Input */
+#conteudo input {
+    width: 100%;
+    height: 45px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* Texto */
+#msg {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 20px;
+    padding: 30px;
+}
+
+#erro{
+    display: none;
+    color: red;
+}
+
+/* Botão */
+#conteudo button {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#conteudo button:hover {
+    background-color: #333;
+}
+#container-login {
+    min-height: calc(100vh - 115px); 
+    /* 40px header + 75px barra */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #f5f5f5;
+}
+
+#rodape{
+    background-color: rgb(168, 168, 168);
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+#rodape a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+#rodape a:hover {
+    text-decoration: underline;
+}
+
+#login {
+    display: none;
+}
+
+#cadastro {
+    display: none;
+}
