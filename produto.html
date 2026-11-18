@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manto Urbano - Visualizar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/produto.css">
+    <link rel="icon" href="/imgs/logo.png" type="image/png">
+
+    <script src="scripts/carrinho.js"></script>
+    <script src="scripts/produto.js"></script>
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/main.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+        <div id="header">
+        <h1>Frete fixo - R$20,00! Envio para todo Brasil</h1>
+    </div>
+    <div id="bar">
+        <ul>
+        <li><a href="/index.html">Inicio</a></li>
+
+        <li class="loja">
+            <a href="/camisetas.html">Ligas</a>
+            <ul class="submenu" id="submenu-ligas"></ul>
+        </li>
+
+        <li><a href="/sac.html">SAC</a></li>
+    </ul>
+    <a href="/index.html" class="logo">
+        <img src="imgs/logo.png" alt="Stomp Clothing">
+    </a>
+    <ul class="menu-right">
+
+        <li class="busca-item">
+            <a href="#" id="btn-lupa" aria-label="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <form id="filtrosInicio" class="filtros">
+                <input type="search" id="busca-lupa" placeholder="Buscar produto" maxlength="60">
+            </form>
+        </li>
+
+        <li><a href="/carrinho.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+        <li>
+            <a href="/login.html">
+                <i class="fa-solid fa-user"></i>
+            </a>
+        </li>
+    </ul>
+    </div>
+
+    <div id="conteudo-produto">
+
+        <div id="produto-erro" class="produto-erro" style="display: none;">
+            <p>Produto não encontrado.</p>
+            <a href="/shop.html">Voltar para a loja</a>
+        </div>
+
+        <div id="produto-detalhe" class="produto-detalhe" style="display: none;">
+
+            <div class="galeria">
+                <img id="imagem-principal" src="" alt="">
+                <div id="miniaturas" class="miniaturas"></div>
+            </div>
+
+            <div class="info-produto">
+                <h1 id="produto-nome"></h1>
+                <h2 id="produto-preco"></h2>
+                <p id="produto-desc"></p>
+
+                <div class="campo">
+                    <label for="select-tamanho">Tamanho</label>
+                    <select id="select-tamanho"></select>
+                </div>
+
+                <div class="campo">
+                    <label for="input-qtd">Quantidade</label>
+                    <input type="number" id="input-qtd" min="1" value="1">
+                    <span id="estoque-info"></span>
+                </div>
+
+                <button id="btn-adicionar" onclick="adicionarProdutoAtualAoCarrinho()">
+                    ADICIONAR AO CARRINHO
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="ModalCarrinho" onclick="fecharModalCarrinho()">
+        <div class="modal-carrinho-box" onclick="event.stopPropagation()">
+            <button type="button" class="modal-carrinho-fechar" onclick="fecharModalCarrinho()" aria-label="Fechar">&times;</button>
+
+            <i class="fa-solid fa-circle-check"></i>
+            <h2>Produto adicionado ao carrinho!</h2>
+
+            <div class="modal-carrinho-acoes">
+                <button type="button" class="btn-continuar" onclick="fecharModalCarrinho()">Continuar comprando</button>
+                <a href="/carrinho.html"><button type="button" class="btn-ver-carrinho">Ver carrinho</button></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="rodape">
+        <p>&copy; 2025 STOMP Cloathing - Todos os direitos reservados.</p>
+        <p>
+            <a href="https://discord.gg/seu-servidor" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a> |
+            <a href="https://discord.gg/seu-servidor" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a> |
+            <a href="/termos.html">Termos de uso</a> |
+            <a href="/politica.html">Política de privacidade</a>
+        </p>
+    </div>
+
+</body>
+</html>

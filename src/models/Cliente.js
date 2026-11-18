@@ -26,9 +26,22 @@ class Cliente extends Model {
             type: Sequelize.STRING,
             allowNull: false
         },
-        data_nasc:{
-          type: Sequelize.DATE,
-          allowNull: false
+        role: {
+            type: Sequelize.STRING,
+            allowNull: false,
+            defaultValue: "cliente",
+        },
+        aceite_documentos_em: {
+            type: Sequelize.DATE,
+            allowNull: true,
+        },
+        versao_termos_aceita: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
+        },
+        versao_politica_ciente: {
+            type: Sequelize.STRING(20),
+            allowNull: true,
         },
       },
       {
@@ -42,6 +55,17 @@ class Cliente extends Model {
 
     return this;
   }
+static associate(models) {
+  this.hasMany(models.Pedido, {
+    foreignKey: "cliente_id",
+    as: "pedidos",
+  });
+  this.hasMany(models.Endereco, {
+  foreignKey: "cliente_id",
+  as: "enderecos",
+  });
+}
+  
 }
 
 export default Cliente;

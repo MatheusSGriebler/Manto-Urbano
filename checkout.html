@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manto Urbano - Finalize sua compra!</title>
+    <link rel="icon" href="/imgs/logo.png" type="image/png">
+    <link rel="stylesheet" href="css/stylecart.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/checkout.css">
+
+    <script src="scripts/products.js" defer></script>
+    <script src="scripts/carrinho.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/checkout.js" defer></script>
+    <script src="scripts/main.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div id="header">
+        <h1>Frete fixo - R$20,00! Envio para todo Brasil</h1>
+    </div>
+    <div id="bar">
+        <ul>
+        <li><a href="/index.html">Inicio</a></li>
+
+        <li class="loja">
+            <a href="/camisetas.html">Ligas</a>
+            <ul class="submenu" id="submenu-ligas"></ul>
+        </li>
+
+        <li><a href="/sac.html">SAC</a></li>
+    </ul>
+
+        <a href="/index.html" class="logo">
+            <img src="imgs/logo.png" alt="Stomp Clothing">
+        </a>
+
+        <ul class="menu-right">
+            <li><a href="/carrinho.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+            <li><a href="/login.html"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </div>
+
+<div class="checkout-layout">
+
+    <div id="carrinho">
+        <h2>Resumo do carrinho</h2>
+        <div id="lista-carrinho"></div>
+        <ul id="checkout-resumo-valores">
+            <li><span>Valor dos produtos</span><span id="checkout-produtos">R$ 0,00</span></li>
+            <li><span>Frete</span><span id="checkout-frete">Calculando...</span></li>
+        </ul>
+        <p id="checkout-frete-aviso" aria-live="polite"></p>
+        <p id="total">Total da compra: R$ 0,00</p>
+    </div>
+
+    <div id="dados">
+        <h2>Identificação</h2>
+        <h3>Dados</h3>
+        <p id="nome" class="textoD">Nome</p>
+        <p id="nomeC" class="textoC"></p>
+        <p id="email" class="textoD">Email</p>
+        <p id="emailC" class="textoC"></p>
+
+        <h3>Endereço de entrega</h3>
+        <div id="lista-enderecos"></div>
+        <button type="button" onclick="cadastrarEndereco()">Cadastrar endereço</button>
+    </div>
+
+    <div id="pagamento">
+        <h2>Pagamento</h2>
+        <!-- a Stripe entra aqui depois -->
+        <button type="button" id="btn-pagar" onclick="pagarPedido()">Finalizar pedido</button>
+    </div>
+
+</div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div id="cEnd">
+            <button type="button" class="btn-fechar" onclick="fecharModal()">&times;</button>
+
+            <h2>Novo endereço</h2>
+            <p>Preencha os dados de entrega.</p>
+
+            <form id="form-endereco">
+
+                <div class="campo col-6">
+                    <label for="identificacao">Identificação do endereço</label>
+                    <input id="identificacao" name="identificacao" type="text" placeholder="Ex: Casa, Trabalho" required>
+                </div>
+
+                <div class="campo col-6">
+                    <label for="nomeRecebedor">Nome de quem vai receber</label>
+                    <input id="nomeRecebedor" name="nomeRecebedor" type="text" placeholder="Nome completo" required>
+                </div>
+
+                <div class="campo col-4">
+                    <label for="cep">CEP</label>
+                    <input id="cep" name="cep" type="text" placeholder="00000-000" inputmode="numeric" maxlength="9" required>
+                </div>
+
+                <div class="campo col-8">
+                    <label for="endereco">Endereço</label>
+                    <input id="endereco" name="endereco" type="text" placeholder="Rua, avenida..." required>
+                </div>
+
+                <div class="campo col-4">
+                    <label for="numero">Número</label>
+                    <input id="numero" name="numero" type="text" inputmode="numeric" placeholder="Nº" required>
+                </div>
+
+                <div class="campo col-8">
+                    <label for="complemento">Complemento</label>
+                    <input id="complemento" name="complemento" type="text" placeholder="Apto, bloco, casa (opcional)">
+                </div>
+
+                <div class="campo col-5">
+                    <label for="bairro">Bairro</label>
+                    <input id="bairro" name="bairro" type="text" required>
+                </div>
+
+                <div class="campo col-5">
+                    <label for="cidade">Cidade</label>
+                    <input id="cidade" name="cidade" type="text" required>
+                </div>
+
+                <div class="campo col-2">
+                    <label for="estado">UF</label>
+                    <select id="estado" name="estado" required>
+                        <option value="" disabled selected>UF</option>
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MT">MT</option>
+                        <option value="MS">MS</option>
+                        <option value="MG">MG</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PR">PR</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RS">RS</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="SC">SC</option>
+                        <option value="SP">SP</option>
+                        <option value="SE">SE</option>
+                        <option value="TO">TO</option>
+                    </select>
+                </div>
+
+                <div class="campo col-7">
+                    <label for="referencia">Ponto de referência</label>
+                    <input id="referencia" name="referencia" type="text" placeholder="Ex: Perto do mercado (opcional)">
+                </div>
+
+                <div class="campo col-5">
+                    <label for="telefone">Telefone</label>
+                    <input id="telefone" name="telefone" type="tel" placeholder="(00) 00000-0000" required>
+                </div>
+
+                <button type="submit" id="btn-salvar-endereco">Salvar endereço</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

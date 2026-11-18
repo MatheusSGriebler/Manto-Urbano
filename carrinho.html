@@ -3,60 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stomp Cloathing</title>
+    <title>Manto Urbano - Carrinho</title>
     <link rel="stylesheet" href="css/stylecart.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="/imgs/logo.png" type="image/png">
 
     <script src="scripts/products.js" defer></script>
+    <script src="scripts/carrinho.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
+     <script src="scripts/main.js" defer></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <div id="header">
-        <h1>Envio em 1 dia útil!</h1>
+        <div id="header">
+        <h1>Frete fixo - R$20,00! Envio para todo Brasil</h1>
     </div>
     <div id="bar">
-    <ul>
-    <li><a href="/index.html">Inicio</a></li>
+        <ul>
+        <li><a href="/index.html">Inicio</a></li>
 
-    <li class="loja">
-        <a href="/shop.html">Loja</a>
-        <ul class="submenu">
-            <li><a href="/shop.html">Camisetas</a></li>
-            <li><a href="/shop.html">Moletons</a></li>
-            <li><a href="/shop.html">Calças</a></li>
-        </ul>
-    </li>
+        <li class="loja">
+            <a href="/camisetas.html">Ligas</a>
+            <ul class="submenu" id="submenu-ligas"></ul>
+        </li>
 
-    <li><a href="/sac.html">SAC</a></li>
-</ul>
-    <a href="#" class="logo">
+        <li><a href="/sac.html">SAC</a></li>
+    </ul>
+    <a href="/index.html" class="logo">
         <img src="imgs/logo.png" alt="Stomp Clothing">
     </a>
     <ul class="menu-right">
-    <li><a href="/carrinho.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
-    <li>
-        <a href="/login.html">
-        <i class="fa-solid fa-user"></i>
-         </a>
-    </li>
+
+        <li class="busca-item">
+            <a href="#" id="btn-lupa" aria-label="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <form id="filtrosInicio" class="filtros">
+                <input type="search" id="busca-lupa" placeholder="Buscar produto" maxlength="60">
+            </form>
+        </li>
+
+        <li><a href="/carrinho.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+        <li>
+            <a href="/login.html">
+                <i class="fa-solid fa-user"></i>
+            </a>
+        </li>
     </ul>
     </div>
-        <div id="conteudo">
-             <h1>Meu carrinho</h1>
 
-            <div id="carrinho">
+    <div id="conteudoCart">
+        <h1>Carrinho <i class="fa-solid fa-cart-shopping"></i></h1>
 
-                <div id="header-carrinho">
+        <table id="itens">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-                    <h1>Produtos</h1>
-                    <h1>Quantidade</h1>
-                    <h1>Valor total</h1>
+            <tbody id="lista-itens">
+                <!-- itens vão entrar aqui -->
+            </tbody>
+        </table>
 
+        <div class="checkout-grid">
+
+            <section class="frete">
+                <h2>Frete</h2>
+                <p>Frete fixo de R$ 20,00. Na compra de 3 ou mais camisetas, o frete é grátis.</p>
+                <p id="frete-aviso" aria-live="polite"></p>
+            </section>
+
+            <section class="resumo">
+                <h2>Resumo</h2>
+
+                <ul class="resumo-lista">
+                    <li><span>Valor dos produtos</span> <span id="resumo-produtos">R$ 0,00</span></li>
+                    <li><span>Frete</span> <span id="resumo-frete">Calculando...</span></li>
+                </ul>
+
+                <div class="resumo-total">
+                    <div class="linha-total">
+                        <span>Total da compra</span>
+                        <strong id="resumo-total">R$ 0,00</strong>
+                    </div>
                 </div>
 
-            </div>
-           
+            <button id="btn-finalizar" onclick="irParaCheckout()">
+                Continuar
+            </button>
+            </section>
+
         </div>
-    </body>
+    </div>
+        <div class="modal-login" id="ModalLogin" onclick="fecharModalLogin()">
+        <div class="modal-login-box" onclick="event.stopPropagation()">
+            <button type="button" class="modal-login-fechar" onclick="fecharModalLogin()" aria-label="Fechar">&times;</button>
+
+            <i class="fa-solid fa-user-lock"></i>
+            <h2>Entre na sua conta</h2>
+            <p>Faça login ou crie sua conta para finalizar a compra.</p>
+
+            <div class="modal-login-acoes">
+                <button type="button" class="btn-login-cancelar" onclick="fecharModalLogin()">Agora não</button>
+                <a href="/login.html" class="btn-login-entrar">Entrar</a>
+            </div>
+        </div>
+    </div>
+</body>
 </html>

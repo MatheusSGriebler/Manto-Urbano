@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manto Urbano</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="/imgs/logo.png" type="image/png">
+
+    <script src="scripts/products.js"></script>
+    <script src="scripts/carrinho.js"></script>
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/main.js" defer></script>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div id="header">
+        <h1>Frete fixo - R$20,00! Envio para todo Brasil</h1>
+    </div>
+    <div id="bar">
+        <ul>
+        <li><a href="/index.html">Inicio</a></li>
+
+        <li class="loja">
+            <a href="/camisetas.html">Ligas</a>
+            <ul class="submenu" id="submenu-ligas"></ul>
+        </li>
+
+        <li><a href="/sac.html">SAC</a></li>
+    </ul>
+    <a href="/index.html" class="logo">
+        <img src="imgs/logo.png" alt="Stomp Clothing">
+    </a>
+    <ul class="menu-right">
+
+        <li class="busca-item">
+            <a href="#" id="btn-lupa" aria-label="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <form id="filtrosInicio">
+                <input type="search" id="busca-lupa" placeholder="Buscar produto" maxlength="60">
+            </form>
+        </li>
+
+        <li><a href="/carrinho.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+        <li>
+            <a href="/login.html">
+                <i class="fa-solid fa-user"></i>
+            </a>
+        </li>
+    </ul>
+    </div>
+
+    <div id="conteudo">
+        <form id="filtros">
+            <input type="search" id="filtro-busca" placeholder="Buscar produto (ex: Grêmio)" maxlength="60">
+
+            <select id="filtro-liga" name="liga">
+                <option value="">Todas as ligas</option>
+            </select>
+
+            <input type="number" id="filtro-min" min="0" step="0.01" placeholder="Preço mín.">
+            <input type="number" id="filtro-max" min="0" step="0.01" placeholder="Preço máx.">
+
+            <select id="filtro-ordem">
+                <option value="recentes">Mais recentes</option>
+                <option value="preco_asc">Menor preço</option>
+                <option value="preco_desc">Maior preço</option>
+                <option value="nome">Nome (A-Z)</option>
+            </select>
+
+            <button type="button" id="filtro-limpar">Limpar</button>
+        </form>
+
+        <div class="cards" id="cardsProdutos">
+            <script>
+                iniciarFiltros(2);
+            </script>
+        </div>
+    </div>
+
+</body>
+</html>

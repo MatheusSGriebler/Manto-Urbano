@@ -18,7 +18,12 @@ async function validarLogin() {
         body: JSON.stringify({ email })
     });
 
-    const data = await res.json();
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+        alert(data.erro || "Não foi possível verificar o e-mail. Tente novamente.");
+        return;
+    }
 
     if (data.existe) {
         console.log("Email existe → fluxo de LOGIN");
@@ -38,33 +43,8 @@ async function cadastro(){
         document.getElementById("botao").style.display = "none";
         document.getElementById("titulo").textContent = "Crie sua conta";
 }
-async function registrar() {
-
-    const emailInput = document.getElementById("email");
-    const email = emailInput.value;
-
-    const nomeInput = document.getElementById("nome");
-    const nome = nomeInput.value;
-
-    const senhaInput = document.getElementById("senha");
-    const senha = senhaInput.value;
-
-    const dataInput = document.getElementById("datanasc");
-    const data_nasc = dataInput.value;
-
-    console.log({nome});
-    
-    const res = await fetch("http://localhost:3000/cadastro", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({email,senha,nome,data_nasc})
-    });
-    redirecionar();
-}
 async function login(){
-    
+
     const emailInput = document.getElementById("email");
     const email = emailInput.value;
     const senhaInput = document.getElementById("senhaL");
@@ -72,19 +52,51 @@ async function login(){
 
     const res = await fetch("http://localhost:3000/login", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({email,senha})
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, senha })
     });
+    const data = await res.json().catch(() => ({}));
+
+    if (res.ok) {
+        salvarSessao(data.token, data.cliente);
+        window.location.replace("/index.html");
+    } else {
+        const mensagemErro = document.getElementById("erro");
+        mensagemErro.textContent = data.erro || "Email ou senha inválidos.";
+        mensagemErro.style.display = "block";
+    }
+}
+
+async function registrar() {
+
+    const email = document.getElementById("email").value;
+    const nome = document.getElementById("nome").value;
+    const senha = document.getElementById("senha").value;
+    const aceiteDocumentos = document.getElementById("aceite-documentos");
+
+    if (!aceiteDocumentos.checked) {
+        aceiteDocumentos.reportValidity();
+        return;
+    }
+
+    const res = await fetch("http://localhost:3000/cadastro", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            email,
+            senha,
+            nome,
+            aceite_documentos: aceiteDocumentos.checked,
+        })
+    });
+
     const data = await res.json();
 
-    if(res.ok){
-        console.log("Login feito");
-    window.location.replace("/index.html");
+    if (res.ok) {
+        salvarSessao(data.token, data.cliente); // já loga automaticamente
+        redirecionar();
     } else {
-    console.log(data.erro);
-    document.getElementById("erro").style.display = "block";
+        alert(data.erro || "Erro no cadastro.");
     }
 }
 
@@ -93,7 +105,6 @@ async function redirecionar(){
     document.getElementById("email").style.display = "none";
     document.getElementById("nome").style.display = "none";
     document.getElementById("senha").style.display = "none";
-    document.getElementById("datanasc").style.display = "none";
     document.getElementById("botaoC").style.display = "none";
 
     document.getElementById("titulo").textContent = "Cadastro realizado! Seja bem vindo! Redirecionando para a tela inicial em 5 segundos!";

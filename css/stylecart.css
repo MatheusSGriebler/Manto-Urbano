@@ -1,187 +1,436 @@
-/* Reset */
-* {
+/* ===== Carrinho ===== */
+
+#conteudoCart {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+#conteudoCart h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 28px;
+    margin-bottom: 24px;
+    color: #c8fb3a;
+}
+
+#conteudoCart h2,
+.frete h2,
+.resumo h2 {
+    color: #c8fb3a;
+}
+
+#conteudoCart span,
+.resumo-lista span {
+    color: #c5c5c5;
+}
+
+/* ===== Tabela de itens ===== */
+
+#itens {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #24293d;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    font-size: 15px;
+}
+
+#itens th {
+    background: #131520;
+    color: #c8fb3a;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#itens td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    vertical-align: middle;
+    color: #ffffff;
+}
+
+#itens tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#itens tbody tr:hover {
+    background: #1d2133;
+}
+
+/* Colunas numéricas */
+#itens th:nth-child(2),
+#itens td:nth-child(2) {
+    text-align: center;
+}
+
+#itens th:nth-child(3),
+#itens td:nth-child(3) {
+    font-weight: 700;
+    white-space: nowrap;
+    color: #c8fb3a;
+}
+
+#itens th:last-child,
+#itens td:last-child {
+    text-align: center;
+}
+
+/* imagem do produto dentro da tabela, se houver */
+#itens img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+    vertical-align: middle;
+    margin-right: 12px;
+}
+
+/* ===== Frete + Resumo lado a lado ===== */
+
+.checkout-grid {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.frete,
+.resumo {
+    flex: 1;
+    padding: 24px;
+    background: #24293d;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+.frete h2,
+.resumo h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+.frete p{
+    color: #ffffff;
+}
+#frete-aviso{
+    margin-top: 8px;
+    color:#c8fb3a;
+    text-decoration: underline;
+}
+
+/* ===== Inputs ===== */
+
+#conteudoCart input,
+.checkout-grid input {
+    height: 44px;
+    padding: 0 14px;
+    background-color: #131520;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#conteudoCart input::placeholder,
+.checkout-grid input::placeholder {
+    color: #8d93ab;
+}
+
+#conteudoCart input:focus,
+.checkout-grid input:focus {
+    border-color: #c8fb3a;
+    box-shadow: 0 0 0 3px rgba(200, 251, 58, 0.18);
+}
+
+.frete #inputFrete {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+/* link "não sei meu CEP" */
+#cep a {
+    color: #8cb127;
+    font-size: 14px;
+    text-decoration: underline;
+}
+
+#cep a:hover {
+    color: #c8fb3a;
+}
+
+/* ===== Botões (só no carrinho) ===== */
+
+#conteudoCart button,
+.checkout-grid button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 13px 22px;
+    margin: 5px;
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #c8fb3a;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+#conteudoCart button:hover,
+.checkout-grid button:hover {
+    background-color: #c8fb3a;
+    color: #131520;
+}
+
+/* botões principais: preenchidos */
+.frete #btn-calcularfrete,
+.resumo #btn-finalizar {
+    width: 100%;
+    margin: 12px 0 0;
+    background-color: #c8fb3a;
+    color: #131520;
+}
+
+.frete #btn-calcularfrete:hover,
+.resumo #btn-finalizar:hover {
+    background-color: #b4e32f;
+    border-color: #b4e32f;
+}
+
+.resumo #btn-finalizar {
+    margin-top: 20px;
+}
+
+.resumo #btn-finalizar:disabled {
+    background-color: #3a4160;
+    border-color: #3a4160;
+    color: #8d93ab;
+    cursor: not-allowed;
+}
+
+/* ===== Resumo ===== */
+
+.resumo-lista {
+    list-style: none;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-body {
-    font-family: 'Montserrat', sans-serif;
-}
-
-/* Header superior */
-#header {
-    background-color: black;
-    height: 40px;
+.resumo-lista li {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#header h1 {
-    color: white;
+    justify-content: space-between;
+    padding: 8px 0;
     font-size: 15px;
-    font-weight: 500;
+    color: #ffffff;
 }
 
-/* Barra principal */
-#bar {
-    background-color: white;
-    height: 75px;
+.resumo-lista .desconto span:last-child {
+    color: #5ee08a;
+}
+
+.resumo-total {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: right;
+}
+
+.linha-total {
     display: flex;
-    align-items: center;
-    position: relative;
-    padding: 0 170px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    justify-content: space-between;
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
 }
 
-/* Menu esquerdo */
-#bar > ul {
-    list-style: none;
-    display: flex;
-    gap: 25px;
+#resumo-total {
+    color: #c8fb3a;
 }
 
-/* Itens principais */
-#bar > ul > li {
-    position: relative;
-    text-transform: uppercase;
-    font-size: 14px;
-}
-
-/* Links do menu */
-#bar > ul > li > a {
+.resumo-total small {
     display: block;
-    padding: 15px 0;
-    text-decoration: none;
-    color: black;
-    transition: color 0.2s ease;
+    margin-top: 4px;
+    color: #8d93ab;
+    font-size: 13px;
 }
 
-/* Hover texto */
-#bar > ul > li:hover > a {
-    color: #4b4b4b;
-}
+/* ===== Celular ===== */
 
-/* Linha animada */
-#bar > ul > li::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 8px;
-    width: 0;
-    height: 2px;
-    background: black;
-    transition: width 0.3s ease;
-}
+@media (max-width: 700px) {
+    .checkout-grid {
+        flex-direction: column;
+    }
 
-#bar > ul > li:hover::after {
-    width: 100%;
-}
+    .frete,
+    .resumo {
+        width: 100%;
+    }
 
-/* Submenu */
-.submenu {
+    #itens {
+        font-size: 13px;
+    }
+
+    #itens th,
+    #itens td {
+        padding: 10px;
+    }
+}
+/* ===== Modal "entre na sua conta" ===== */
+
+.modal-login {
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: white;
-    min-width: 160px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    padding: 10px 0;
-    list-style: none;
-}
-
-.loja:hover .submenu {
-    display: block;
-}
-
-.submenu li a {
-    display: block;
-    padding: 10px 20px;
-    font-size: 14px;
-    text-decoration: none;
-    color: black;
-}
-
-.submenu li:hover {
-    background-color: #f5f5f5;
-}
-
-/* Menu direito */
-.menu-right {
-    list-style: none;
-    display: flex;
-    gap: 25px;
-    margin-left: auto;
-}
-
-.menu-right i {
-    font-size: 18px;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.menu-right i:hover {
-    color: #4b4b4b;
-}
-
-/* Logo central */
-.logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 100%;
-    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
     align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(8, 9, 15, 0.75);
+    backdrop-filter: blur(4px);
 }
 
-.logo img {
-    max-height: 60%;
-}
-
-/* Conteúdo */
-#conteudo {
-    padding: 100px 170px 70px;
-}
-
-/* Título */
-#conteudo h1 {
-    text-align: left;
-    margin-bottom: 60px;
-    text-decoration: underline;
-}
-
-
-#header-carrinho{
+.modal-login.aberto {
     display: flex;
+    animation: loginFundo 0.2s ease;
+}
+
+.modal-login-box {
     position: relative;
-    height: 75px;
-    gap: 290px;
-    padding: 0 30px;
-    align-items: center;
-}
-
-#header-carrinho h1{
-    text-decoration: none;
-    font-size: 20px;
-}
-
-
-#rodape{
-    background-color: rgb(168, 168, 168);
-    color: #ffffff;
-    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 420px;
+    padding: 36px 28px 28px;
     text-align: center;
-    margin-top: 50px;
-}
-
-#rodape a {
+    background-color: #24293d;
     color: #ffffff;
-    text-decoration: none;
-    margin: 0 10px;
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid #c8fb3a;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    animation: loginEntrada 0.25s ease;
 }
 
-#rodape a:hover {
-    text-decoration: underline;
+.modal-login-box > i {
+    margin-bottom: 14px;
+    font-size: 40px;
+    color: #c8fb3a;
+}
+
+.modal-login-box h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.modal-login-box p {
+    margin: 0 0 24px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #c5c5c5;
+}
+
+.modal-login-fechar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #131520;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.modal-login-fechar:hover {
+    background: #c8fb3a;
+    border-color: #c8fb3a;
+    color: #131520;
+}
+
+.modal-login-acoes {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-login-acoes button,
+.modal-login-acoes a {
+    flex: 1;
+    height: 46px;
+    margin: 0;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-login-cancelar {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+}
+
+.btn-login-cancelar:hover {
+    background: #1d2133;
+    border-color: #8d93ab;
+}
+
+.btn-login-entrar {
+    background: #c8fb3a;
+    color: #131520;
+    border: 1px solid #c8fb3a;
+}
+
+.btn-login-entrar:hover {
+    background: #b4e32f;
+    border-color: #b4e32f;
+}
+
+@keyframes loginFundo {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes loginEntrada {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 480px) {
+    .modal-login-acoes {
+        flex-direction: column-reverse;
+    }
 }

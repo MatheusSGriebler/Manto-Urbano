@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manto Urbano - Minha conta</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cliente.css">
+    <link rel="icon" href="/imgs/logo.png" type="image/png">
+
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/cliente.js" defer></script>
+    <script src="scripts/main.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div id="header">
+        <h1>Frete fixo - R$20,00! Envio para todo Brasil</h1>
+    </div>
+
+    <div id="bar">
+        <ul>
+            <li><a href="/index.html">Inicio</a></li>
+
+            <li class="loja">
+                <a href="/camisetas.html">Ligas</a>
+                <ul class="submenu" id="submenu-ligas"></ul>
+            </li>
+
+            <li><a href="/sac.html">SAC</a></li>
+        </ul>
+
+        <a href="/index.html" class="logo">
+            <img src="imgs/logo.png" alt="Manto Urbano">
+        </a>
+
+        <ul class="menu-right">
+            <li><a href="/carrinho.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+            <li><a href="/login.html"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
+    </div>
+
+    <div id="conteudo">
+
+        <nav id="menu">
+            <h2>MANTO URBANO</h2>
+            <ul class="submenuA">
+                <li><a href="#pedidos" data-secao="pedidos" class="ativo">Meus pedidos</a></li>
+                <li><a href="#informacoes" data-secao="informacoes">Informações</a></li>
+                <li><a href="#" id="btn-sair">Sair</a></li>
+            </ul>
+        </nav>
+
+        <main id="areaCliente">
+
+            <section id="secao-pedidos" class="secao">
+                <h2>Meus pedidos</h2>
+                <div id="pedidosCliente"><p>Carregando...</p></div>
+            </section>
+
+            <section id="secao-informacoes" class="secao" hidden>
+                <h2>Informações</h2>
+
+                <div class="bloco">
+                    <p><strong id="conta-nome"></strong></p>
+                    <p id="conta-email"></p>
+                </div>
+
+                <h3>Meus endereços</h3>
+                <div id="lista-enderecos-conta"><p>Carregando...</p></div>
+            </section>
+
+        </main>
+            <div class="modal-confirmar" id="ModalConfirmar" onclick="fecharModalConfirmar()">
+        <div class="modal-confirmar-box" onclick="event.stopPropagation()">
+            <button type="button" class="modal-confirmar-fechar" onclick="fecharModalConfirmar()" aria-label="Fechar">&times;</button>
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <h2>Remover endereço?</h2>
+            <p>Esse endereço será removido da sua conta. Os pedidos já feitos não são afetados.</p>
+
+            <p class="modal-confirmar-erro" id="confirmar-erro" hidden></p>
+
+            <div class="modal-confirmar-acoes">
+                <button type="button" class="btn-cancelar" onclick="fecharModalConfirmar()">Cancelar</button>
+                <button type="button" class="btn-confirmar" id="btn-confirmar-remover" onclick="confirmarRemocaoEndereco()">Remover</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="rodape">
+        <p>&copy; 2027 Manto Urbano - Todos os direitos reservados.</p>
+        <p>
+            <a href="https://discord.gg/seu-servidor" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a> |
+            <a href="https://discord.gg/seu-servidor" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a> |
+            <a href="/termos.html">Termos de uso</a> |
+            <a href="/politica.html">Política de privacidade</a>
+        </p>
+    </div>
+</body>
+</html>

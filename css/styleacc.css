@@ -7,6 +7,8 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    background-image: url('/imgs/background.png');
 }
 
 /* Header superior */
@@ -26,13 +28,12 @@ body {
 
 /* Barra principal */
 #bar {
-    background-color: white;
+    background-color: #24293d;
     height: 75px;
     display: flex;
     align-items: center;
     position: relative;
     padding: 0 170px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 
 /* Menu esquerdo */
@@ -54,13 +55,12 @@ body {
     display: block;
     padding: 15px 0;
     text-decoration: none;
-    color: black;
+    color: #ffffff;
     transition: color 0.2s ease;
 }
 
-/* Hover texto */
 #bar > ul > li:hover > a {
-    color: #4b4b4b;
+    color: #cecece;
 }
 
 /* Linha animada */
@@ -71,7 +71,7 @@ body {
     bottom: 8px;
     width: 0;
     height: 2px;
-    background: black;
+    background: #c8fb3a;
     transition: width 0.3s ease;
 }
 
@@ -85,9 +85,9 @@ body {
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: white;
+    background-color: #24293d;
     min-width: 160px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     padding: 10px 0;
     list-style: none;
 }
@@ -101,11 +101,11 @@ body {
     padding: 10px 20px;
     font-size: 14px;
     text-decoration: none;
-    color: black;
+    color: #ffffff;
 }
 
 .submenu li:hover {
-    background-color: #f5f5f5;
+    background-color: #131520;
 }
 
 /* Menu direito */
@@ -140,77 +140,143 @@ body {
     max-height: 60%;
 }
 
-/* Conteúdo */
+/* ===== Área de login ===== */
+
+#container-login {
+    min-height: calc(100vh - 115px); /* 40px header + 75px barra */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 16px;
+}
+
 /* Card de login */
 #conteudo {
-    width: 400px;
-    padding: 60px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 420px;
+    padding: 48px 40px 36px;
     text-align: center;
+    background-color: #24293d;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 3px solid #c8fb3a;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 /* Título */
 #conteudo h1 {
+    margin-bottom: 28px;
     font-size: 18px;
-    margin-bottom: 25px;
+    line-height: 1.4;
+    font-weight: 600;
+    color: #ffffff;
     text-decoration: none;
 }
 
-/* Input */
+/* Inputs */
 #conteudo input {
     width: 100%;
-    height: 45px;
+    height: 46px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
+    padding: 0 14px;
+    background-color: #131520;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
+    outline: none;
+    color-scheme: dark; /* ícone do calendário visível no campo de data */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Texto */
-#msg {
+#conteudo input::placeholder {
+    color: #6c738f;
+}
+
+#conteudo input:focus {
+    border-color: #c8fb3a;
+    box-shadow: 0 0 0 3px rgba(200, 251, 58, 0.18);
+}
+
+.aceite-documentos {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 0 0 16px;
+    text-align: left;
     font-size: 12px;
-    color: #666;
-    margin-bottom: 20px;
-    padding: 30px;
+    line-height: 1.5;
+    color: #d5d9e7;
 }
 
-#erro{
+#conteudo .aceite-documentos input[type="checkbox"] {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin: 1px 0 0;
+    padding: 0;
+    accent-color: #c8fb3a;
+}
+
+.aceite-documentos a {
+    color: #c8fb3a;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+/* Mensagem de erro */
+#erro {
     display: none;
-    color: red;
+    margin: -4px 0 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ff8a8a;
 }
 
-/* Botão */
+/* Botões */
 #conteudo button {
     width: 100%;
-    height: 45px;
-    border: none;
-    border-radius: 5px;
-    background-color: black;
-    color: white;
-    font-weight: bold;
+    height: 46px;
+    background-color: #c8fb3a;
+    color: #131520;
+    border: 1px solid #c8fb3a;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: 0.2s;
+    transition: background-color 0.2s ease;
 }
 
 #conteudo button:hover {
-    background-color: #333;
-}
-#container-login {
-    min-height: calc(100vh - 115px); 
-    /* 40px header + 75px barra */
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: #f5f5f5;
+    background-color: #b4e32f;
+    border-color: #b4e32f;
 }
 
-#rodape{
-    background-color: rgb(168, 168, 168);
+/* Texto de termos */
+#msg {
+    padding: 22px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #8d93ab;
+}
+
+/* O validarLogin.js mostra um destes dois blocos */
+#login {
+    display: none;
+}
+
+#cadastro {
+    display: none;
+}
+
+/* Rodapé */
+#rodape {
+    background-color: #131520;
     color: #ffffff;
     padding: 20px;
     text-align: center;
@@ -226,10 +292,8 @@ body {
     text-decoration: underline;
 }
 
-#login {
-    display: none;
-}
-
-#cadastro {
-    display: none;
+@media (max-width: 480px) {
+    #conteudo {
+        padding: 36px 22px 28px;
+    }
 }

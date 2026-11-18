@@ -17,16 +17,31 @@ class Imagem_prodController {
   // ➕ Adicionar imagem ao produto
   async store(req, res) {
     const schema = Yup.object().shape({
-      produto_id: Yup.number().required(),
-      url: Yup.string().required(),
-      principal: Yup.boolean(),
-    });
+      produto_id: Yup.number().positive().integer().required(),
+      url: Yup.string()
+        .trim()
+        .max(2048)
+        .required()
+        .test("https-url", "A imagem precisa usar uma URL HTTPS válida.", value => {
+          try {
+            const parsed = new URL(value);
+            return parsed.protocol === "https:" && !parsed.username && !parsed.password;
+          } catch {
+            return false;
+          }
+        }),
+      principal: Yup.boolean().default(false),
+    }).noUnknown(true);
 
-    if (!(await schema.isValid(req.body))) {
+    let dados;
+    try {
+      dados = await schema.validate(req.body, { abortEarly: false, stripUnknown: true });
+    } catch {
       return res.status(400).json({ error: "Dados inválidos." });
     }
 
-    const { produto_id, url, principal } = req.body;
+    const { produto_id, principal } = dados;
+    const url = new URL(dados.url).href;
 
     const produto = await Produtos.findByPk(produto_id);
 

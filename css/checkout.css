@@ -1,0 +1,548 @@
+/* ===== Layout em 3 colunas ===== */
+
+.checkout-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 0 16px;
+}
+
+#carrinho,
+#dados,
+#pagamento {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 24px;
+    background-color: #24293d;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    color: #ffffff;
+}
+
+#dados {
+    flex: 1.4;
+}
+
+#carrinho h2,
+#dados h2,
+#pagamento h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 22px;
+    color: #c8fb3a;
+}
+
+#carrinho h3,
+#dados h3,
+#pagamento h3 {
+    padding: 7px 0;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.checkout-layout .textoC {
+    padding-bottom: 10px;
+    color: #ffffff;
+}
+
+.checkout-layout .textoD {
+    color: #8d93ab;
+    font-size: 14px;
+}
+
+.checkout-layout a {
+    color: #8cb127;
+}
+
+.checkout-layout a:hover {
+    color: #c8fb3a;
+}
+
+/* ===== Botões da página ===== */
+
+.checkout-layout button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 13px 22px;
+    margin: 5px 0;
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid #c8fb3a;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.checkout-layout button:hover {
+    background-color: #c8fb3a;
+    color: #131520;
+}
+
+/* botão principal: preenchido */
+#pagamento #btn-pagar {
+    width: 100%;
+    margin: 20px 0 0;
+    background-color: #c8fb3a;
+    color: #131520;
+}
+
+#pagamento #btn-pagar:hover {
+    background-color: #b4e32f;
+    border-color: #b4e32f;
+}
+
+#pagamento #btn-pagar:disabled {
+    background-color: #3a4160;
+    border-color: #3a4160;
+    color: #8d93ab;
+    cursor: not-allowed;
+}
+
+/* ===== Lista de endereços ===== */
+
+.endereco-opcao {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+    background: #131520;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.4;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.endereco-opcao:hover {
+    border-color: #8cb127;
+}
+
+.endereco-opcao:has(input:checked) {
+    border-color: #c8fb3a;
+    background: #1a1f30;
+}
+
+.endereco-opcao input {
+    margin-top: 4px;
+    accent-color: #c8fb3a;
+}
+
+/* ===== Resumo do pedido ===== */
+
+.resumo-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#checkout-resumo-valores {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+}
+
+#checkout-resumo-valores li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 0;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+#checkout-frete-aviso {
+    color: #c8fb3a;
+    font-size: 13px;
+}
+
+#total {
+    margin-top: 16px;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: right;
+    color: #c8fb3a;
+}
+
+/* ===== Modal ===== */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(8, 9, 15, 0.75);
+    backdrop-filter: blur(4px);
+}
+
+.modal-overlay.aberto {
+    display: flex;
+    animation: modalFundo 0.2s ease;
+}
+
+#cEnd {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 620px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px 28px 28px;
+    background-color: #24293d;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid #c8fb3a;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    animation: modalEntrada 0.25s ease;
+}
+
+#cEnd h2 {
+    margin: 0 40px 6px 0;
+    font-size: 22px;
+    color: #c8fb3a;
+}
+
+#cEnd p {
+    margin: 0 0 22px;
+    font-size: 14px;
+    color: #8d93ab;
+}
+
+#cEnd::-webkit-scrollbar {
+    width: 8px;
+}
+
+#cEnd::-webkit-scrollbar-thumb {
+    background: #3a4160;
+    border-radius: 8px;
+}
+
+#cEnd .btn-fechar {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #131520;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+#cEnd .btn-fechar:hover {
+    background: #c8fb3a;
+    border-color: #c8fb3a;
+    color: #131520;
+}
+
+@keyframes modalFundo {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes modalEntrada {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ===== Formulário de endereço (dentro do modal) ===== */
+
+#form-endereco {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 18px 14px;
+}
+
+#cEnd .campo {
+    grid-column: span 12;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* quantas colunas (de 12) cada campo ocupa; precisam vir depois do .campo */
+#cEnd .col-2 { grid-column: span 2; }
+#cEnd .col-4 { grid-column: span 4; }
+#cEnd .col-5 { grid-column: span 5; }
+#cEnd .col-6 { grid-column: span 6; }
+#cEnd .col-7 { grid-column: span 7; }
+#cEnd .col-8 { grid-column: span 8; }
+
+#cEnd .campo label {
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #c5c5c5;
+}
+
+#cEnd .campo input,
+#cEnd .campo select {
+    box-sizing: border-box;
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    background-color: #131520;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#cEnd .campo input::placeholder {
+    color: #6c738f;
+}
+
+#cEnd .campo input:focus,
+#cEnd .campo select:focus {
+    border-color: #c8fb3a;
+    box-shadow: 0 0 0 3px rgba(200, 251, 58, 0.18);
+}
+
+#cEnd .campo select {
+    padding: 0 8px;
+    cursor: pointer;
+}
+
+#cEnd .campo select option {
+    background-color: #131520;
+    color: #ffffff;
+}
+
+/* botão de salvar: largura total, verde-limão */
+#form-endereco button {
+    grid-column: 1 / -1;
+    height: 48px;
+    margin: 6px 0 0;
+    padding: 0 22px;
+    background-color: #c8fb3a;
+    color: #131520;
+    border: 1px solid #c8fb3a;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#form-endereco button:hover {
+    background-color: #b4e32f;
+    border-color: #b4e32f;
+}
+
+#form-endereco button:disabled {
+    background-color: #3a4160;
+    border-color: #3a4160;
+    color: #8d93ab;
+    cursor: not-allowed;
+}
+
+/* ===== Telas menores ===== */
+
+@media (max-width: 900px) {
+    .checkout-layout {
+        flex-direction: column;
+    }
+
+    #carrinho,
+    #dados,
+    #pagamento {
+        flex: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    #cEnd {
+        padding: 28px 18px 20px;
+    }
+
+    #cEnd .campo,
+    #cEnd .col-2,
+    #cEnd .col-4,
+    #cEnd .col-5,
+    #cEnd .col-6,
+    #cEnd .col-7,
+    #cEnd .col-8 {
+        grid-column: span 12;
+    }
+}
+/* ===== Modal de aviso ===== */
+
+.modal-aviso {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1100; /* acima do modal de endereço */
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(8, 9, 15, 0.75);
+    backdrop-filter: blur(4px);
+}
+
+.modal-aviso.aberto {
+    display: flex;
+    animation: avisoFundo 0.2s ease;
+}
+
+.modal-aviso-box {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 420px;
+    padding: 36px 28px 28px;
+    text-align: center;
+    background-color: #24293d;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 3px solid #c8fb3a;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    animation: avisoEntrada 0.25s ease;
+}
+
+.modal-aviso-box > i {
+    margin-bottom: 14px;
+    font-size: 40px;
+    color: #c8fb3a;
+}
+
+.modal-aviso-box h2 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.modal-aviso-box p {
+    margin: 0 0 24px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #c5c5c5;
+}
+
+.modal-aviso-fechar {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #131520;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+    border-radius: 50%;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.modal-aviso-fechar:hover {
+    background: #c8fb3a;
+    border-color: #c8fb3a;
+    color: #131520;
+}
+
+.modal-aviso-acoes {
+    display: flex;
+    gap: 12px;
+}
+
+.modal-aviso-acoes button {
+    flex: 1;
+    height: 46px;
+    margin: 0;
+    padding: 0 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-aviso-secundario {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid #3a4160;
+}
+
+.btn-aviso-secundario:hover {
+    background: #1d2133;
+    border-color: #8d93ab;
+}
+
+.btn-aviso-principal {
+    background: #c8fb3a;
+    color: #131520;
+    border: 1px solid #c8fb3a;
+}
+
+.btn-aviso-principal:hover {
+    background: #b4e32f;
+    border-color: #b4e32f;
+}
+
+@keyframes avisoFundo {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes avisoEntrada {
+    from { opacity: 0; transform: translateY(16px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 480px) {
+    .modal-aviso-acoes {
+        flex-direction: column-reverse;
+    }
+}

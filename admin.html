@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manto Urbano - Painel Admin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="icon" href="/imgs/logo.png" type="image/png">
+
+    <script src="scripts/products.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/addProduct.js" defer></script>
+    <script src="scripts/pedidos.js" defer></script>
+    <script src="scripts/admin.js" defer></script>
+    <script src="scripts/editProduct.js" defer></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div id="conteudo">
+
+    <nav id="menu">
+        <h2>STOMP</h2>
+
+        <ul class="submenuA">
+            <li><a href="#cadastrar" data-secao="cadastrar">📦 Cadastrar Produto</a></li>
+            <li><a href="#produtos" data-secao="produtos">📁 Produtos</a></li>
+            <li><a href="#ligas" data-secao="ligas">🏆 Ligas</a></li>
+            <li><a href="#vendas" data-secao="vendas">🛒 Vendas</a></li>
+            <li><a href="#" id="btn-sair">🚪 Sair</a></li>
+        </ul>
+    </nav>
+
+    <main id="painel">
+
+        <!-- ===== CADASTRAR PRODUTO ===== -->
+        <section id="secao-cadastrar" class="secao" hidden>
+
+            <div class="topo-painel">
+                <h1>Adicionar produto</h1>
+                <p>Cadastre um novo produto na loja.</p>
+            </div>
+
+            <form id="formProduto">
+
+                <section class="card-form">
+
+                    <h2>Informações do produto</h2>
+
+                    <div class="campo">
+                        <label for="nome">Nome do produto</label>
+                        <input
+                            id="nome"
+                            name="nome"
+                            type="text"
+                            placeholder="Ex: Camiseta Grêmio 2026"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="desc">Descrição</label>
+                        <textarea
+                            id="desc"
+                            name="desc"
+                            placeholder="Ex: Camiseta oficial, tecido dry-fit"
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="linha-campos">
+
+                        <div class="campo">
+                            <label for="preco">Preço</label>
+                            <div class="input-preco">
+                                <span>R$</span>
+                                <input
+                                    id="preco"
+                                    name="preco"
+                                    type="number"
+                                    step="0.01"
+                                    min="0"
+                                    placeholder="150,00"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <div class="campo">
+                            <label for="categoria">Categoria</label>
+
+                            <!-- as opções são preenchidas pelo admin.js (GET /categorias) -->
+                            <select id="categoria" name="categoria" required>
+                                <option value="" disabled selected>
+                                    Selecione uma categoria...
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="liga">Liga</label>
+
+                            <!-- as opções são preenchidas pelo admin.js (GET /ligas) -->
+                            <select id="liga" name="liga" required>
+                                <option value="" disabled selected>
+                                    Selecione uma liga...
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section class="card-form">
+
+                    <h2>Tamanhos e estoque</h2>
+                    <p class="descricao-card">
+                        Selecione os tamanhos disponíveis e informe o estoque.
+                    </p>
+
+                    <div class="tamanhos-grid">
+
+                        <div class="tamanho-item">
+                            <label class="check-tamanho">
+                                <input type="checkbox" name="tamanhos" value="P">
+                                <span>P</span>
+                            </label>
+
+                            <input type="number" name="estoque_P" min="0" placeholder="Estoque">
+                        </div>
+
+                        <div class="tamanho-item">
+                            <label class="check-tamanho">
+                                <input type="checkbox" name="tamanhos" value="M">
+                                <span>M</span>
+                            </label>
+
+                            <input type="number" name="estoque_M" min="0" placeholder="Estoque">
+                        </div>
+
+                        <div class="tamanho-item">
+                            <label class="check-tamanho">
+                                <input type="checkbox" name="tamanhos" value="G">
+                                <span>G</span>
+                            </label>
+
+                            <input type="number" name="estoque_G" min="0" placeholder="Estoque">
+                        </div>
+
+                        <div class="tamanho-item">
+                            <label class="check-tamanho">
+                                <input type="checkbox" name="tamanhos" value="GG">
+                                <span>GG</span>
+                            </label>
+
+                            <input type="number" name="estoque_GG" min="0" placeholder="Estoque">
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section class="card-form">
+
+                    <h2>Imagens do produto</h2>
+
+                    <p class="descricao-card">
+                        Adicione as imagens que serão exibidas no produto.
+                    </p>
+
+                    <div class="campo">
+                        <label for="imagemUrl">URL da imagem</label>
+
+                        <input
+                            id="imagemUrl"
+                            type="url"
+                            placeholder="https://exemplo.com/imagem.jpg"
+                        >
+                    </div>
+
+                    <div class="imagem-opcoes">
+
+                        <label class="check-principal">
+                            <input type="checkbox" id="imagemPrincipal">
+                            Definir como imagem principal
+                        </label>
+
+                        <button
+                            type="button"
+                            class="btn-imagem"
+                            onclick="adicionarImagem()"
+                        >
+                            + Adicionar imagem
+                        </button>
+
+                    </div>
+
+                    <!-- Imagens adicionadas -->
+                    <div id="listaImagens"></div>
+
+                </section>
+
+                <div class="acoes-form">
+                    <button
+                        type="button"
+                        class="btn-cancelar"
+                        onclick="cancelarCadastro()"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-adicionar"
+                        onclick="createProduct()"
+                    >
+                        Adicionar produto
+                    </button>
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- ===== PRODUTOS ===== -->
+        <section id="secao-produtos" class="secao" hidden>
+
+            <div class="topo-painel">
+                <h1>Produtos</h1>
+                <p>Produtos cadastrados na loja.</p>
+            </div>
+
+            <div id="listProdutos">
+                <div class="cards" id="cardsProdutos"></div>
+            </div>
+
+        </section>
+
+
+        <!-- ===== LIGAS ===== -->
+        <section id="secao-ligas" class="secao" hidden>
+
+            <div class="topo-painel">
+                <h1>Ligas</h1>
+                <p>Cadastre as ligas que aparecem no menu e nos filtros da loja.</p>
+            </div>
+
+            <section class="card-form liga-bloco">
+                <h2>Nova liga</h2>
+
+                <form id="formLiga" class="liga-form" onsubmit="criarLiga(event)">
+                    <input
+                        id="ligaNome"
+                        type="text"
+                        placeholder="Ex: Brasileirão, La Liga, Premier League"
+                        maxlength="100"
+                        autocomplete="off"
+                        required
+                    >
+                    <button type="submit" class="btn-adicionar" id="btnCriarLiga">Cadastrar liga</button>
+                </form>
+
+                <p class="liga-msg" id="ligaMsg" hidden></p>
+            </section>
+
+            <section class="card-form liga-bloco">
+                <h2>Ligas cadastradas</h2>
+                <div id="listaLigas"><p class="liga-vazio">Carregando...</p></div>
+            </section>
+
+        </section>
+
+
+        <!-- ===== VENDAS ===== -->
+        <section id="secao-vendas" class="secao" hidden>
+
+            <div class="topo-painel">
+                <h1>Vendas</h1>
+                <p>Pedidos recebidos na loja.</p>
+            </div>
+
+            <div id="listPedidos">
+                <div class="cards" id="cardsVendas"></div>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div id="rodape">
+    <p>&copy; 2025 STOMP Cloathing - Todos os direitos reservados.</p>
+    <p>
+        <a href="https://discord.gg/seu-servidor" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a> |
+        <a href="https://discord.gg/seu-servidor" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a> |
+        <a href="#">Termos de uso</a> |
+        <a href="/politica.html">Política de privacidade</a>
+    </p>
+</div>
+
+</body>
+</html>

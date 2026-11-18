@@ -3,81 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stomp Cloathing</title>
+    <title>Manto Urbano</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="/imgs/logo.png" type="image/png">
 
     <script src="scripts/products.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/main.js" defer></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <div id="header">
-        <h1>Envio em 1 dia útil!</h1>
+        <h1>Frete fixo - R$20,00! Envio para todo Brasil</h1>
     </div>
     <div id="bar">
-    <ul>
-    <li><a href="/index.html">Inicio</a></li>
+        <ul>
+        <li><a href="/index.html">Inicio</a></li>
 
-    <li class="loja">
-        <a href="/shop.html">Loja</a>
-        <ul class="submenu">
-            <li><a href="/shop.html">Camisetas</a></li>
-            <li><a href="/shop.html">Moletons</a></li>
-            <li><a href="/shop.html">Calças</a></li>
-        </ul>
-    </li>
+        <li class="loja">
+            <a href="/camisetas.html">Ligas</a>
+            <ul class="submenu" id="submenu-ligas"></ul>
+        </li>
 
-    <li><a href="/sac.html">SAC</a></li>
-</ul>
+        <li><a href="/sac.html">SAC</a></li>
+    </ul>
     <a href="#" class="logo">
         <img src="imgs/logo.png" alt="Stomp Clothing">
     </a>
     <ul class="menu-right">
-    <li><a href="/carrinho.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
-    <li>
-        <a href="/login.html">
-        <i class="fa-solid fa-user"></i>
-         </a>
-    </li>
+
+        <li class="busca-item">
+            <a href="#" id="btn-lupa" aria-label="Buscar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <form id="filtrosInicio" class="filtros">
+                <input type="search" id="busca-lupa" placeholder="Buscar produto" maxlength="60">
+            </form>
+        </li>
+
+        <li><a href="/carrinho.html"><i class="fa-solid fa-bag-shopping"></i></a></li>
+        <li>
+            <a href="/login.html">
+                <i class="fa-solid fa-user"></i>
+            </a>
+        </li>
     </ul>
     </div>
 
     <div id="conteudo">
-        <h1>2025 collection</h1>
+
+        <div id="banner">
+            <img src="/imgs/banner2.png" alt="Banner">
+        </div>
+
+        <h1>Ligas</h1>
 
     <div class="cards">
         <div class="card">
-            <h2>Moletom</h2>
-            <h3>STOMP the Stars</h3>
-            <img src="/imgs/moletom1.png">
-            <p>Por</p>
-            <h3>R$7,90</h3>
-            <button>ADICIONAR AO CARRINHO</button>
+            <h2>Brasileirão</h2>
+            <img src="/imgs/brasileirao.png">
+            <p>Clique para ver as camisetas do campeonato Brasileiro</p>
+            <a href="/camisetas.html?liga=1"><button type="button">Ver</button></a>
         </div>
 
-        <div class="card">
-            <h2>Camiseta</h2>
-            <h3>STOMP the Stars</h3>
-            <img src="/imgs/camiseta1.png">
-            <p>Por</p>
-            <h3>R$7,90</h3>
-            <button>Comprar</button>
+         <div class="card">
+            <h2>La Liga</h2>
+            <img src="/imgs/LaLiga.png">
+            <p>Clique para ver as camisetas do campeonato La Liga</p>
+            <a href="/camisetas.html?liga=2"><button type="button">Ver</button></a>
         </div>
-
+          <div class="card">
+            <h2>Premier League</h2>
+            <img src="/imgs/PremierLeague.png">
+            <p>Clique para ver as camisetas do campeonato Premier League</p>
+            <a href="/camisetas.html?liga=3"><button type="button">Ver</button></a>
+        </div>
     </div>
-</div>
-</div>
+    <a href="/camisetas.html" id="ver-mais">Ver tudo</a>
+    </div>
 
 <div id="rodape">
-         <p>&copy; 2025 STOMP Cloathing - Todos os direitos reservados.</p>
+         <p>&copy; 2027 Manto Urbano - Todos os direitos reservados.</p>
     <p>
         <a href="https://discord.gg/seu-servidor" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a> |
         <a href="https://discord.gg/seu-servidor" target="_blank"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a> |
-        <a href="#">Termos de uso</a> |
-        <a href="#">Política de privacidade</a>
+        <a href="/termos.html">Termos de uso</a> |
+        <a href="/politica.html">Política de privacidade</a>
     </p>
     </div>
-
 </body>
 </html>

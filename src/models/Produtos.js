@@ -20,13 +20,17 @@ class Produtos extends Model {
         },
 
         preco: {
-          type: Sequelize.DOUBLE,
+          type: Sequelize.DECIMAL(10, 2),
           allowNull: false,
         },
-
         categoria_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
+        },
+
+        liga_id: {
+          type: Sequelize.INTEGER,
+          allowNull: true,
         },
 
         ativo: {
@@ -52,13 +56,18 @@ class Produtos extends Model {
       as: "categoria",
     });
 
+    this.belongsTo(models.Liga, {
+      foreignKey: "liga_id",
+      as: "liga",
+    });
+
     this.hasMany(models.Tamanho_prod, {
       foreignKey: "produto_id",
       as: "tamanhos",
     });
     this.hasMany(models.Imagem_prod, {
-    foreignKey: "produto_id",
-    as: "imagens",
+      foreignKey: "produto_id",
+      as: "imagens",
     });
   }
 }
