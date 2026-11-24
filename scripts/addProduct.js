@@ -13,6 +13,12 @@ async function createProduct() {
         return;
     }
 
+    const urlPendente = document.getElementById("imagemUrl")?.value.trim();
+    if (imagens.length === 0 && urlPendente) {
+        adicionarImagem();
+        if (imagens.length === 0) return;
+    }
+
     const tamanhos = {};
 
     document.querySelectorAll('input[name="tamanhos"]:checked').forEach((checkbox) => {

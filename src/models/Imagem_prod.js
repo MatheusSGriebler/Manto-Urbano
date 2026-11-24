@@ -28,7 +28,9 @@ class Imagem_prod extends Model {
       {
           sequelize,
           tableName: "imagem_prod",
-          timestamps: false,
+          timestamps: true,
+          createdAt: "data_add",
+          updatedAt: "data_upd",
       }
     );
 
