@@ -33,7 +33,7 @@ class App {
       origensPermitidas.push(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`);
     }
 
-    if (process.env.NODE_ENV === "production" && origensPermitidas.length === 0) {
+    if (process.env.NODE_ENV === "production" && !process.env.VERCEL && origensPermitidas.length === 0) {
       throw new Error("Configure CORS_ORIGINS com o domínio do frontend em produção.");
     }
 
