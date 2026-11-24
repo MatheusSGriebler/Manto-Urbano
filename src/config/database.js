@@ -1,3 +1,5 @@
+import pg from "pg";
+
 const production = process.env.NODE_ENV === "production";
 const dialect = process.env.DB_DIALECT || "postgres";
 
@@ -33,6 +35,7 @@ const usarSsl =
 
 const databaseConfig = {
   dialect,
+  ...(dialect === "postgres" ? { dialectModule: pg } : {}),
   host,
   port,
   username,
