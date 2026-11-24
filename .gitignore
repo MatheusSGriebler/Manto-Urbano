@@ -44,6 +44,3 @@ coverage/
 *.pfx
 *.jks
 
-#Paginas
-/termos.html
-/politica.html

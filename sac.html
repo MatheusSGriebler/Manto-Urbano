@@ -1,49 +1,96 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manto Urbano - SAC</title>
+    <meta name="description" content="Central de Atendimento (SAC), trocas, devoluções e contatos da Manto Urbano.">
+    <title>SAC - Atendimento | Manto Urbano</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="/imgs/logo.png" type="image/png">
-    <script src="scripts/mainActions.js" defer></script>
+
+    <script src="scripts/products.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
+    <script src="scripts/main.js" defer></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <div id="header">
-        <h1>Envio em 1 dia útil!</h1>
+        <h1>Frete fixo - R$20,00! Envio para todo Brasil</h1>
     </div>
     <div id="bar">
-    <ul>
-    <li><a href="/index.html">Inicio</a></li>
-
-    <li class="loja">
-        <a href="/shop.html">Loja</a>
-        <ul class="submenu">
-            <li><a href="/camisetas.html">Camisetas</a></li>
-            <li><a href="/moletons.html">Moletons</a></li>
-            <li><a href="/calças.html">Calças</a></li>
+        <ul>
+            <li><a href="/index.html">Início</a></li>
+            <li class="loja">
+                <a href="/camisetas.html">Ligas</a>
+                <ul class="submenu" id="submenu-ligas"></ul>
+            </li>
+            <li><a href="/sac.html">SAC</a></li>
         </ul>
-    </li>
-
-    <li><a href="/sac.html">SAC</a></li>
-</ul>
-    <a href="#" class="logo">
-        <img src="imgs/logo.png" alt="Stomp Clothing">
-    </a>
-    <ul class="menu-right">
-    <li><i class="fa-solid fa-bag-shopping"></i></li>
-    <li><i class="fa-solid fa-user"></i></li>
-    </ul>
+        <a href="/index.html" class="logo">
+            <img src="imgs/logo.png" alt="Manto Urbano">
+        </a>
+        <ul class="menu-right">
+            <li class="busca-item">
+                <a href="#" id="btn-lupa" aria-label="Buscar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
+                <form id="filtrosInicio" class="filtros">
+                    <input type="search" id="busca-lupa" placeholder="Buscar produto" maxlength="60">
+                </form>
+            </li>
+            <li><a href="/carrinho.html" aria-label="Carrinho"><i class="fa-solid fa-bag-shopping"></i></a></li>
+            <li><a href="/login.html" aria-label="Minha conta"><i class="fa-solid fa-user"></i></a></li>
+        </ul>
     </div>
 
-    <div id="sac">
-        <h1>Trocas e devoluções:</h1>
-        <h1>Contatos:</h1>
+    <main class="privacidade sac-pagina">
+        <h1>Central de Atendimento (SAC)</h1>
+        <p class="atualizacao">Tire suas dúvidas sobre pedidos, entregas, trocas e devoluções.</p>
+
+        <h2>Canais de contato</h2>
+        <div class="sac-canais">
+            <div class="sac-card">
+                <h3><i class="fa-solid fa-envelope"></i> E-mail</h3>
+                <p>Para suporte sobre pedidos, trocas, devoluções ou privacidade:</p>
+                <a class="sac-link" href="mailto:urbanomanto@gmail.com">urbanomanto@gmail.com</a>
+            </div>
+            <div class="sac-card">
+                <h3><i class="fa-brands fa-instagram"></i> Instagram</h3>
+                <p>Atendimento direto pelo nosso Direct oficial:</p>
+                <a class="sac-link" href="https://www.instagram.com/manto.urbano/" target="_blank" rel="noopener noreferrer">@manto.urbano</a>
+            </div>
+        </div>
+
+        <h2>Trocas e devoluções</h2>
+        <ul>
+            <li><strong>Direito de arrependimento (7 dias):</strong> conforme o art. 49 do Código de Defesa do Consumidor, você pode desistir da compra em até 7 dias corridos após o recebimento, sem precisar justificar.</li>
+            <li><strong>Defeito ou divergência (até 90 dias):</strong> se o produto chegar com defeito, avaria ou diferente do anunciado, entre em contato informando o número do pedido e fotos do item.</li>
+            <li><strong>Trocas por tamanho ou preferência:</strong> consulte a disponibilidade pelo nosso e-mail ou Instagram antes de enviar o produto.</li>
+            <li><strong>Como solicitar:</strong> envie uma mensagem para <a href="mailto:urbanomanto@gmail.com">urbanomanto@gmail.com</a> ou no Direct do <a href="https://www.instagram.com/manto.urbano/" target="_blank" rel="noopener noreferrer">@manto.urbano</a> com o <strong>número do pedido</strong> e o motivo da solicitação.</li>
+        </ul>
+
+        <h2>Entregas e rastreamento</h2>
+        <ul>
+            <li><strong>Frete:</strong> frete fixo de R$ 20,00 para todo o Brasil. Na compra de 3 ou mais camisetas, o frete é grátis.</li>
+            <li><strong>Acompanhar pedido:</strong> acesse <a href="/cliente.html">Minha conta</a> para consultar o status e o código de rastreio do seu pedido.</li>
+        </ul>
+
+        <h2>Documentos da loja</h2>
+        <p>Para mais detalhes sobre prazos, reembolsos e tratamento de dados, consulte nossos <a href="/termos.html">Termos de Uso</a> e a <a href="/politica.html">Política de Privacidade</a>.</p>
+    </main>
+
+    <div id="rodape">
+        <p>&copy; 2027 Manto Urbano - Todos os direitos reservados.</p>
+        <p>
+            <a href="https://www.instagram.com/manto.urbano/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i> Instagram</a> |
+            <a href="/termos.html">Termos de uso</a> |
+            <a href="/politica.html">Política de privacidade</a>
+        </p>
+        <p id="msg">
+            <a href="https://www.msgdev.com.br" target="_blank" rel="noopener noreferrer">Desenvolvido por MSG Dev</a>
+        </p>
     </div>
-</div>
-</div>
 </body>
 </html>

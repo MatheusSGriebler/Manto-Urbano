@@ -1,3 +1,7 @@
+const API_BASE_URL = ["5500", "5501"].includes(window.location.port)
+    ? "http://localhost:3000"
+    : "";
+
 const TOKEN_KEY = "token";
 const CLIENTE_KEY = "cliente";
 

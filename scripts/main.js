@@ -41,7 +41,7 @@ async function carregarLigasMenu() {
     if (!submenu) return;
 
     try {
-        const resposta = await fetch("http://localhost:3000/ligas");
+        const resposta = await fetch(API_BASE_URL + "/ligas");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar ligas");

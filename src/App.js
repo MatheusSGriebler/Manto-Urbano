@@ -26,6 +26,13 @@ class App {
       .map(origem => origem.trim())
       .filter(Boolean);
 
+    if (process.env.VERCEL_URL) {
+      origensPermitidas.push(`https://${process.env.VERCEL_URL}`);
+    }
+    if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+      origensPermitidas.push(`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`);
+    }
+
     if (process.env.NODE_ENV === "production" && origensPermitidas.length === 0) {
       throw new Error("Configure CORS_ORIGINS com o domínio do frontend em produção.");
     }

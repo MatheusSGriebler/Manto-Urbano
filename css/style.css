@@ -9,6 +9,9 @@ body {
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
     background-image: url('/imgs/background.png');
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Header superior */
@@ -92,6 +95,7 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     padding: 10px 0;
     list-style: none;
+    z-index: 120;
 }
 
 .loja:hover .submenu {
@@ -160,17 +164,18 @@ body {
 /*Banners */
 
 #banner {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-top: 0;
-    margin-bottom: 20px;
-    padding: 20px 0px 20px;
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 20px 0;
     align-items: center;
-   
 }
 
 #banner img {
-    height: 400px; object-fit: cover;   
+    height: 400px;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
 }
 #ver-mais {
     display: block;
@@ -263,24 +268,47 @@ body {
 }
 
 
-#rodape{
+#rodape {
+    margin-top: auto;
     background-color: #131520;
     color: #ffffff;
-    padding: 20px;
+    padding: 12px 16px;
     text-align: center;
-   
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+#rodape p {
+    margin: 3px 0;
 }
 
 #rodape a {
     color: #ffffff;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 8px;
+    display: inline-block;
 }
 
 #rodape a:hover {
     text-decoration: underline;
 }
 
+#rodape #msg {
+    margin-top: 6px;
+    padding: 0;
+    font-size: 14px;
+    color: #b4b8cc;
+}
+
+#rodape #msg a {
+    font-size: 14px;
+    color: #b4b8cc;
+    margin: 0;
+}
+
+#rodape #msg a:hover {
+    color: #ffffff;
+}
 .busca-item {
     display: flex;
     align-items: center;
@@ -604,5 +632,175 @@ main.privacidade .pendencia strong {
     main.privacidade {
         margin: 20px 12px;
         padding: 28px 20px;
+    }
+}
+
+/* ===== SAC ===== */
+
+.sac-canais {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 16px 0 28px;
+}
+
+.sac-card {
+    background-color: #131520;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 18px 20px;
+}
+
+.sac-card h3 {
+    color: #c8fb3a;
+    font-size: 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sac-card p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #c5c5c5;
+}
+
+.sac-link {
+    font-weight: 600;
+    word-break: break-word;
+}
+
+@media (max-width: 600px) {
+    .sac-canais {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== Responsividade global (menus, busca, banner e cards) ===== */
+
+@media (max-width: 1100px) {
+    #bar {
+        padding: 0 32px;
+    }
+
+    #filtrosInicio input {
+        width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    #header {
+        height: auto;
+        min-height: 36px;
+        padding: 6px 12px;
+    }
+
+    #header h1 {
+        font-size: 13px;
+        text-align: center;
+    }
+
+    #bar {
+        padding: 10px 16px;
+        height: auto;
+        min-height: 60px;
+        flex-wrap: wrap;
+        row-gap: 6px;
+    }
+
+    .logo {
+        position: static;
+        transform: none;
+        order: -1;
+        height: 42px;
+        margin-right: auto;
+    }
+
+    .logo img {
+        max-height: 100%;
+    }
+
+    .menu-right {
+        order: 0;
+        gap: 18px;
+        margin-left: auto;
+        align-items: center;
+    }
+
+    .menu-right li a {
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    #bar > ul:first-child {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+        gap: 22px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 4px;
+    }
+
+    #bar > ul > li > a {
+        padding: 8px 0;
+        font-size: 13px;
+    }
+
+    #bar > ul > li::after {
+        bottom: 2px;
+    }
+
+    #filtrosInicio.aberto {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 10px 16px;
+        background-color: #1d2133;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+        z-index: 110;
+    }
+
+    #filtrosInicio input {
+        width: 100%;
+    }
+
+    #banner {
+        padding: 10px 0;
+        margin-bottom: 12px;
+    }
+
+    #banner img {
+        width: 100%;
+        height: auto;
+    }
+
+    #conteudo h1 {
+        font-size: 22px;
+        padding: 0 16px;
+    }
+
+    .cards {
+        gap: 20px;
+        padding: 0 16px;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    #ver-mais {
+        max-width: 180px;
+        padding: 14px 20px;
+        margin: 24px auto 32px;
     }
 }

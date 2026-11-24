@@ -71,7 +71,7 @@ function escaparHtml(texto) {
 }
 
 async function cotarCarrinho(carrinho = lerCarrinho()) {
-    const resposta = await fetch("http://localhost:3000/pedidos/cotacao", {
+    const resposta = await fetch(API_BASE_URL + "/pedidos/cotacao", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

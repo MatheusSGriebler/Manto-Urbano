@@ -32,7 +32,7 @@ async function carregarProduto() {
 
     try {
 
-        const resposta = await fetch(`http://localhost:3000/produtos/${id}`);
+        const resposta = await fetch(`${API_BASE_URL}/produtos/${id}`);
 
         if (!resposta.ok) {
             throw new Error("Produto não encontrado");

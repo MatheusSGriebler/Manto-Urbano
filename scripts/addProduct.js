@@ -39,7 +39,7 @@ async function createProduct() {
 
     try {
 
-        const response = await fetchAutenticado("http://127.0.0.1:3000/produtos", {
+        const response = await fetchAutenticado(API_BASE_URL + "/produtos", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -55,7 +55,7 @@ async function createProduct() {
 
         for (const imagem of imagens) {
 
-    const imagemResponse = await fetchAutenticado("http://127.0.0.1:3000/imagens", {
+    const imagemResponse = await fetchAutenticado(API_BASE_URL + "/imagens", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

@@ -26,7 +26,7 @@ async function carregarCategorias() {
     const select = document.getElementById("categoria");
 
     try {
-        const resposta = await fetch("http://localhost:3000/categorias");
+        const resposta = await fetch(API_BASE_URL + "/categorias");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar categorias");
@@ -52,7 +52,7 @@ async function carregarLigas() {
     const select = document.getElementById("liga");
 
     try {
-        const resposta = await fetch("http://localhost:3000/ligas");
+        const resposta = await fetch(API_BASE_URL + "/ligas");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar ligas");
@@ -99,7 +99,7 @@ async function listarLigasAdmin() {
     const container = document.getElementById("listaLigas");
 
     try {
-        const resposta = await fetch("http://localhost:3000/ligas");
+        const resposta = await fetch(API_BASE_URL + "/ligas");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar ligas");
@@ -141,7 +141,7 @@ async function criarLiga(evento) {
     mostrarMsgLiga("");
 
     try {
-        const resposta = await fetchAutenticado("http://localhost:3000/ligas", {
+        const resposta = await fetchAutenticado(API_BASE_URL + "/ligas", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -184,7 +184,7 @@ async function removerLiga(id) {
     }
 
     try {
-        const resposta = await fetchAutenticado(`http://localhost:3000/ligas/${id}`, {
+        const resposta = await fetchAutenticado(`${API_BASE_URL}/ligas/${id}`, {
             method: "DELETE"
         });
 
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // confirma com o back que a conta é admin (o localStorage não prova nada)
     try {
-        const resposta = await fetchAutenticado("http://localhost:3000/pedidos");
+        const resposta = await fetchAutenticado(API_BASE_URL + "/pedidos");
 
         if (resposta.status === 401 || resposta.status === 403) {
             window.location.href = "/index.html";

@@ -281,6 +281,8 @@
     }
 
     #itens {
+        display: block;
+        overflow-x: auto;
         font-size: 13px;
     }
 

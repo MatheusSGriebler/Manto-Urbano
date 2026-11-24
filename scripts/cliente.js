@@ -35,7 +35,7 @@ async function carregarMeusPedidos() {
     const container = document.getElementById("pedidosCliente");
 
     try {
-        const resposta = await fetchAutenticado("http://localhost:3000/pedidos/meus");
+        const resposta = await fetchAutenticado(API_BASE_URL + "/pedidos/meus");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar seus pedidos.");
@@ -111,7 +111,7 @@ async function carregarEnderecosConta() {
     const container = document.getElementById("lista-enderecos-conta");
 
     try {
-        const resposta = await fetchAutenticado("http://localhost:3000/enderecos");
+        const resposta = await fetchAutenticado(API_BASE_URL + "/enderecos");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar endereços");
@@ -172,7 +172,7 @@ async function confirmarRemocaoEndereco() {
     botao.disabled = true; // evita clique duplo
 
     try {
-        const resposta = await fetchAutenticado(`http://localhost:3000/enderecos/${enderecoParaRemover}`, {
+        const resposta = await fetchAutenticado(`${API_BASE_URL}/enderecos/${enderecoParaRemover}`, {
             method: "DELETE",
         });
 

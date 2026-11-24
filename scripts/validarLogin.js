@@ -10,7 +10,7 @@ async function validarLogin() {
         return;
     }
 
-    const res = await fetch("http://localhost:3000/verificar-email", {
+    const res = await fetch(API_BASE_URL + "/verificar-email", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -50,7 +50,7 @@ async function login(){
     const senhaInput = document.getElementById("senhaL");
     const senha = senhaInput.value;
 
-    const res = await fetch("http://localhost:3000/login", {
+    const res = await fetch(API_BASE_URL + "/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha })
@@ -79,7 +79,7 @@ async function registrar() {
         return;
     }
 
-    const res = await fetch("http://localhost:3000/cadastro", {
+    const res = await fetch(API_BASE_URL + "/cadastro", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

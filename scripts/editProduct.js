@@ -1,7 +1,7 @@
 // scripts/editProduct.js
 // Modal de edição de produto (painel admin). O HTML do modal é criado aqui.
 
-const EDICAO_API = "http://localhost:3000";
+const EDICAO_API = API_BASE_URL;
 
 function edicaoUrlImagemSegura(valor) {
     if (typeof valor !== "string" || !valor.trim()) return "/imgs/sem-imagem.png";

@@ -49,8 +49,8 @@ function montarUrlProdutos(categoria, filtros = {}) {
     if (filtros.ordem) params.set("ordem", filtros.ordem);
 
     const base = categoria
-        ? `http://localhost:3000/produtos/categoria/${categoria}`
-        : "http://localhost:3000/produtos";
+        ? `${API_BASE_URL}/produtos/categoria/${categoria}`
+        : API_BASE_URL + "/produtos";
 
     const qs = params.toString();
     return qs ? `${base}?${qs}` : base;
@@ -109,7 +109,7 @@ async function carregarProdutos(categoria, filtros = {}) {
 // preenche o select de liga da barra de filtros (GET /ligas)
 async function carregarLigasFiltro(select) {
     try {
-        const resposta = await fetch("http://localhost:3000/ligas");
+        const resposta = await fetch(API_BASE_URL + "/ligas");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar ligas");
@@ -212,7 +212,7 @@ async function listarProdutos() {
     try {
 
         // GET /produtos é rota pública, não precisa de token
-        const resposta = await fetch("http://localhost:3000/produtos");
+        const resposta = await fetch(API_BASE_URL + "/produtos");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar produtos");
@@ -270,7 +270,7 @@ async function deletarProduto(id) {
     try {
 
         const resposta = await fetchAutenticado(
-            `http://localhost:3000/produtos/${id}`,
+            `${API_BASE_URL}/produtos/${id}`,
             { method: "DELETE" }
         );
 

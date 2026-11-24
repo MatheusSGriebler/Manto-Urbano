@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    { "source": "/categorias(.*)", "destination": "/api/index.js" },
+    { "source": "/ligas(.*)", "destination": "/api/index.js" },
+    { "source": "/produtos(.*)", "destination": "/api/index.js" },
+    { "source": "/imagens(.*)", "destination": "/api/index.js" },
+    { "source": "/pedidos(.*)", "destination": "/api/index.js" },
+    { "source": "/cadastro", "destination": "/api/index.js" },
+    { "source": "/login", "destination": "/api/index.js" },
+    { "source": "/verificar-email", "destination": "/api/index.js" },
+    { "source": "/enderecos(.*)", "destination": "/api/index.js" }
+  ]
+}

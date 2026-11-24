@@ -29,7 +29,7 @@ async function listarPedidos() {
 
     try {
 
-        const resposta = await fetchAutenticado("http://localhost:3000/pedidos");
+        const resposta = await fetchAutenticado(API_BASE_URL + "/pedidos");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar pedidos");
@@ -136,7 +136,7 @@ async function cancelarPedido(id) {
     try {
 
         const resposta = await fetchAutenticado(
-            `http://localhost:3000/pedidos/${id}/cancelar`,
+            `${API_BASE_URL}/pedidos/${id}/cancelar`,
             { method: "PATCH" }
         );
 
@@ -177,7 +177,7 @@ async function adicionarRastreio(pedido_id) {
     try {
 
         const resposta = await fetchAutenticado(
-            `http://localhost:3000/pedidos/${pedido_id}/rastreio`,
+            `${API_BASE_URL}/pedidos/${pedido_id}/rastreio`,
             {
                 method: "POST",
                 body: JSON.stringify({

@@ -25,7 +25,7 @@ async function carregarEnderecos() {
     const container = document.getElementById("lista-enderecos");
 
     try {
-        const resposta = await fetchAutenticado("http://localhost:3000/enderecos");
+        const resposta = await fetchAutenticado(API_BASE_URL + "/enderecos");
 
         if (!resposta.ok) {
             throw new Error("Erro ao buscar endereços");
@@ -92,7 +92,7 @@ document.getElementById("form-endereco").addEventListener("submit", async (e) =>
     botao.disabled = true;
 
     try {
-        const resposta = await fetchAutenticado("http://localhost:3000/enderecos", {
+        const resposta = await fetchAutenticado(API_BASE_URL + "/enderecos", {
             method: "POST",
             body: JSON.stringify(dados),
         });
@@ -154,7 +154,7 @@ async function pagarPedido() {
     botao.textContent = "Processando...";
 
     try {
-        const resposta = await fetchAutenticado("http://localhost:3000/pedidos", {
+        const resposta = await fetchAutenticado(API_BASE_URL + "/pedidos", {
             method: "POST",
             body: JSON.stringify({
                 endereco_id: enderecoSelecionado,
