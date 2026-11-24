@@ -37,13 +37,24 @@ class App {
       throw new Error("Configure CORS_ORIGINS com o domínio do frontend em produção.");
     }
 
-    this.server.use(cors({
-      origin(origem, callback) {
-        if (!origem || (origensPermitidas.length === 0 && process.env.NODE_ENV !== "production") || origensPermitidas.includes(origem)) {
-          return callback(null, true);
-        }
-        return callback(new Error("Origem não permitida pelo CORS."));
-      },
+    this.server.use(cors((req, callback) => {
+      const origem = req.header("Origin");
+      const hostAtual = req.header("x-forwarded-host") || req.header("host");
+      const mesmaOrigem = Boolean(
+        origem &&
+        hostAtual &&
+        (origem === `https://${hostAtual}` || origem === `http://${hostAtual}`)
+      );
+
+      if (
+        !origem ||
+        mesmaOrigem ||
+        (origensPermitidas.length === 0 && process.env.NODE_ENV !== "production") ||
+        origensPermitidas.includes(origem)
+      ) {
+        return callback(null, { origin: true });
+      }
+      return callback(new Error("Origem não permitida pelo CORS."));
     }));
     this.server.use(express.json({ limit: "32kb" }));
     this.server.use(jsonError);
