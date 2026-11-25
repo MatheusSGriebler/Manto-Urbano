@@ -46,6 +46,18 @@ h2{
     flex: 1;
 }
 
+#produto-desc {
+    color: #d8d8d8;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 12px 0 20px;
+}
+
+#estoque-info {
+    color: #c5c5c5;
+    font-size: 14px;
+}
+
 .info-produto .campo {
     margin: 15px 0;
 }
@@ -53,6 +65,7 @@ h2{
 .produto-erro {
     text-align: center;
     padding: 60px 20px;
+    color: #ffffff;
 }
 /* ===== SELEÇÃO DE TAMANHO E QUANTIDADE ===== */
 
@@ -67,7 +80,7 @@ h2{
     font-size: 13px;
     letter-spacing: 0.05em;
     margin-bottom: 8px;
-    color: #111;
+    color: #ffffff;
 }
 
 /* Select de tamanho — visual quadrado, sem a seta padrão do navegador */
