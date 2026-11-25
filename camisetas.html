@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="/imgs/logo.png" type="image/png">
 
-    <script src="scripts/products.js"></script>
-    <script src="scripts/carrinho.js"></script>
     <script src="scripts/auth.js" defer></script>
+    <script src="scripts/products.js" defer></script>
+    <script src="scripts/carrinho.js" defer></script>
     <script src="scripts/main.js" defer></script>
 
 
@@ -78,7 +78,9 @@
 
         <div class="cards" id="cardsProdutos">
             <script>
-                iniciarFiltros(2);
+                document.addEventListener("DOMContentLoaded", () => {
+                    iniciarFiltros(2);
+                });
             </script>
         </div>
     </div>

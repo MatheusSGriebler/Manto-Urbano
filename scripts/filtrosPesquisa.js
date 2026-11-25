@@ -25,9 +25,10 @@ export function montarFiltrosProdutos(query = {}) {
   const busca = String(query.busca ?? "").trim().slice(0, 60);
   if (busca) {
     const termo = `%${escaparLike(busca)}%`;
+    const opBusca = (process.env.DB_DIALECT || "postgres") === "postgres" ? Op.iLike : Op.like;
     where[Op.or] = [
-      { nome: { [Op.like]: termo } },
-      { desc: { [Op.like]: termo } },
+      { nome: { [opBusca]: termo } },
+      { desc: { [opBusca]: termo } },
     ];
   }
 
