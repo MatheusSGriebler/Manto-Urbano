@@ -145,7 +145,13 @@ async function pagarPedido() {
     try {
         await renderizarResumo();
     } catch {
-        alert("Não foi possível validar os valores do carrinho. Atualize a página e tente novamente.");
+        mostrarAviso({
+            icone: "fa-triangle-exclamation",
+            titulo: "Erro ao validar carrinho",
+            texto: "Não foi possível validar os valores do carrinho. Atualize a página e tente novamente.",
+            botaoPrincipal: "Atualizar página",
+            aoPrincipal: () => { window.location.reload(); },
+        });
         return;
     }
 
@@ -178,14 +184,28 @@ async function pagarPedido() {
         const frete = Number(data.valor_frete) === 0
             ? "grátis"
             : formatarPreco(data.valor_frete);
-        alert(`Pedido #${data.id} realizado com sucesso! Frete: ${frete}. Total: ${total}.`);
-        window.location.href = "/index.html";
+
+        botao.textContent = "Pedido realizado!";
+        mostrarAviso({
+            icone: "fa-circle-check",
+            titulo: `Pedido #${data.id} confirmado!`,
+            texto: `Seu pedido foi registrado com sucesso. Frete: ${frete}. Total: ${total}.`,
+            botaoSecundario: "Voltar à loja",
+            aoSecundario: () => { window.location.href = "/index.html"; },
+            botaoPrincipal: "Ver meus pedidos",
+            aoPrincipal: () => { window.location.href = "/cliente.html"; },
+        });
 
     } catch (erro) {
         console.error(erro);
-        alert(erro.message);
         botao.disabled = false;
         botao.textContent = "Finalizar pedido";
+        mostrarAviso({
+            icone: "fa-triangle-exclamation",
+            titulo: "Não foi possível finalizar",
+            texto: erro.message || "Erro ao finalizar pedido.",
+            botaoPrincipal: "Tentar novamente",
+        });
     }
 }
 function preencherDados() {
@@ -308,7 +328,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 // ===== MODAL DE AVISO (substitui os alert) =====
 
-function mostrarAviso({ icone = "fa-circle-info", titulo, texto, botaoPrincipal, aoPrincipal }) {
+function mostrarAviso({
+    icone = "fa-circle-info",
+    titulo,
+    texto,
+    botaoPrincipal,
+    aoPrincipal,
+    botaoSecundario = "Fechar",
+    aoSecundario,
+}) {
     let modal = document.getElementById("ModalAviso");
 
     if (!modal) {
@@ -325,7 +353,7 @@ function mostrarAviso({ icone = "fa-circle-info", titulo, texto, botaoPrincipal,
                 <p id="aviso-texto"></p>
 
                 <div class="modal-aviso-acoes">
-                    <button type="button" class="btn-aviso-secundario">Fechar</button>
+                    <button type="button" class="btn-aviso-secundario" id="aviso-secundario">Fechar</button>
                     <button type="button" class="btn-aviso-principal" id="aviso-principal"></button>
                 </div>
             </div>
@@ -333,12 +361,10 @@ function mostrarAviso({ icone = "fa-circle-info", titulo, texto, botaoPrincipal,
 
         document.body.appendChild(modal);
 
-        // clicar no fundo escuro, no X ou em "Fechar" fecha
         modal.addEventListener("click", (e) => {
             if (e.target === modal) fecharAviso();
         });
         modal.querySelector(".modal-aviso-fechar").addEventListener("click", fecharAviso);
-        modal.querySelector(".btn-aviso-secundario").addEventListener("click", fecharAviso);
 
         document.addEventListener("keydown", (e) => {
             if (e.key === "Escape") fecharAviso();
@@ -348,6 +374,15 @@ function mostrarAviso({ icone = "fa-circle-info", titulo, texto, botaoPrincipal,
     modal.querySelector("#aviso-icone").className = `fa-solid ${icone}`;
     modal.querySelector("#aviso-titulo").textContent = titulo;
     modal.querySelector("#aviso-texto").textContent = texto;
+
+    const secAntigo = modal.querySelector("#aviso-secundario");
+    const secundario = secAntigo.cloneNode(false);
+    secundario.textContent = botaoSecundario;
+    secundario.addEventListener("click", () => {
+        fecharAviso();
+        if (aoSecundario) aoSecundario();
+    });
+    secAntigo.replaceWith(secundario);
 
     // troca o botão principal por um novo, pra não acumular listeners de avisos anteriores
     const antigo = modal.querySelector("#aviso-principal");
