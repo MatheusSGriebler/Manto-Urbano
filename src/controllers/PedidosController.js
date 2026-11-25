@@ -88,7 +88,6 @@ async function calcularResumoItens(itens, { transaction, bloquearEstoque = false
         id: item.tamanho_prod_id,
         produto_id: item.produto_id,
       },
-      include: [{ model: Tamanho, as: "tamanho" }],
       ...opcoesTamanho,
     });
 
@@ -97,6 +96,8 @@ async function calcularResumoItens(itens, { transaction, bloquearEstoque = false
         `Tamanho ${item.tamanho_prod_id} não encontrado para o produto ${item.produto_id}.`
       );
     }
+
+    const tamanho = await Tamanho.findByPk(tamanhoProd.tamanho_id, opcoesProduto);
 
     const qtdTotalTamanho = quantidadePorTamanho.get(item.tamanho_prod_id) ?? item.quantidade;
     if (tamanhoProd.estoque < qtdTotalTamanho) {
@@ -115,7 +116,7 @@ async function calcularResumoItens(itens, { transaction, bloquearEstoque = false
       produto_id: produto.id,
       tamanho_prod_id: tamanhoProd.id,
       nome: produto.nome,
-      tamanho: tamanhoProd.tamanho?.nome ?? "-",
+      tamanho: tamanho?.nome ?? "-",
       personalizacao: item.personalizacao,
       quantidade: item.quantidade,
       preco_unitario: precoCentavos / 100,
