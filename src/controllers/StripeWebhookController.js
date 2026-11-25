@@ -3,61 +3,89 @@ import db from "../database/index.js";
 import Pedido from "../models/Pedido.js";
 import ItensPedido from "../models/ItensPedido.js";
 import Tamanho_prod from "../models/Tamanho_prod.js";
+import { calcularResumoItens } from "./PedidosController.js";
+
+function lerItensMetadata(metadata = {}) {
+  const totalChunks = Number(metadata.itens_chunks || 0);
+  if (!Number.isInteger(totalChunks) || totalChunks <= 0) return [];
+
+  let texto = "";
+  for (let i = 0; i < totalChunks; i++) {
+    texto += metadata[`itens_${i}`] ?? "";
+  }
+
+  const compacto = JSON.parse(texto);
+  return compacto.map(item => ({
+    produto_id: Number(item.p),
+    tamanho_prod_id: Number(item.t),
+    quantidade: Number(item.q),
+    personalizacao: item.s || null,
+  }));
+}
 
 async function confirmarPagamento(session) {
-  const pedidoId = Number(session.metadata?.pedido_id);
-  if (!Number.isInteger(pedidoId) || pedidoId <= 0) return;
+  if (session.payment_status !== "paid") return;
+
+  // Idempotência: se esse pagamento já gerou um pedido, não cria outro
+  const jaExiste = await Pedido.findOne({
+    where: { stripe_session_id: session.id },
+  });
+  if (jaExiste) {
+    if (jaExiste.status === "PENDENTE") {
+      await jaExiste.update({ status: "PAGO" });
+    }
+    return;
+  }
+
+  const cliente_id = Number(session.metadata?.cliente_id);
+  const endereco_id = Number(session.metadata?.endereco_id);
+  const itens = lerItensMetadata(session.metadata);
+
+  if (!cliente_id || !endereco_id || itens.length === 0) {
+    console.error("Metadata incompleta no webhook Stripe:", session.id);
+    return;
+  }
 
   const transaction = await db.connection.transaction();
   try {
-    const pedido = await Pedido.findByPk(pedidoId, {
+    const resumo = await calcularResumoItens(itens, {
       transaction,
-      lock: transaction.LOCK.UPDATE,
+      bloquearEstoque: true,
     });
 
-    if (pedido && pedido.status === "PENDENTE" && session.payment_status === "paid") {
-      await pedido.update(
+    for (const item of resumo.itens) {
+      await Tamanho_prod.decrement("estoque", {
+        by: item.quantidade,
+        where: { id: item.tamanho_prod_id },
+        transaction,
+      });
+    }
+
+    const pedido = await Pedido.create(
+      {
+        cliente_id,
+        endereco_id,
+        valor_frete: resumo.freteCentavos / 100,
+        valor_total: resumo.valor_total,
+        status: "PAGO",
+        stripe_session_id: session.id,
+      },
+      { transaction }
+    );
+
+    for (const item of resumo.itens) {
+      await ItensPedido.create(
         {
-          status: "PAGO",
-          stripe_session_id: pedido.stripe_session_id || session.id,
+          pedido_id: pedido.id,
+          produto_id: item.produto_id,
+          tamanho_prod_id: item.tamanho_prod_id,
+          quantidade: item.quantidade,
+          preco_unitario: item.preco_unitario,
+          subtotal: item.subtotal,
+          personalizacao: item.personalizacao ?? null,
         },
         { transaction }
       );
-    }
-
-    await transaction.commit();
-  } catch (err) {
-    await transaction.rollback();
-    throw err;
-  }
-}
-
-async function cancelarPorExpiracao(session) {
-  const pedidoId = Number(session.metadata?.pedido_id);
-  if (!Number.isInteger(pedidoId) || pedidoId <= 0) return;
-
-  const transaction = await db.connection.transaction();
-  try {
-    const pedido = await Pedido.findByPk(pedidoId, {
-      transaction,
-      lock: transaction.LOCK.UPDATE,
-    });
-
-    if (pedido && pedido.status === "PENDENTE") {
-      const itens = await ItensPedido.findAll({
-        where: { pedido_id: pedido.id },
-        transaction,
-      });
-
-      for (const item of itens) {
-        await Tamanho_prod.increment("estoque", {
-          by: item.quantidade,
-          where: { id: item.tamanho_prod_id },
-          transaction,
-        });
-      }
-
-      await pedido.update({ status: "CANCELADO" }, { transaction });
     }
 
     await transaction.commit();
@@ -95,8 +123,6 @@ class StripeWebhookController {
         event.type === "checkout.session.async_payment_succeeded"
       ) {
         await confirmarPagamento(event.data.object);
-      } else if (event.type === "checkout.session.expired") {
-        await cancelarPorExpiracao(event.data.object);
       }
 
       return res.json({ received: true });

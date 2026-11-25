@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (params.get("pagamento") === "sucesso") {
         localStorage.removeItem("carrinho");
         history.replaceState(null, "", window.location.pathname);
+        // Aguarda um instante caso o webhook da Stripe ainda esteja gravando o pedido
+        setTimeout(carregarMeusPedidos, 2000);
     }
 });
 

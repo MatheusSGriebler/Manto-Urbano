@@ -42,7 +42,7 @@ function idValido(valor) {
   return Number.isInteger(n) && n > 0 ? n : null;
 }
 
-async function calcularResumoItens(itens, { transaction, bloquearEstoque = false } = {}) {
+export async function calcularResumoItens(itens, { transaction, bloquearEstoque = false } = {}) {
   let subtotalCentavos = 0;
   let quantidadeTotal = 0;
   const itensValidados = [];
@@ -165,6 +165,25 @@ const incluirItens = () => ({
 const incluirRastreio = () => ({ model: Rastreio, as: "rastreio" });
 const incluirEndereco = () => ({ model: Endereco, as: "endereco" });
 
+function serializarItensMetadata(itens) {
+  const compacto = itens.map(item => ({
+    p: item.produto_id,
+    t: item.tamanho_prod_id,
+    q: item.quantidade,
+    ...(item.personalizacao ? { s: item.personalizacao } : {}),
+  }));
+  const texto = JSON.stringify(compacto);
+  const metadata = { itens_chunks: "0" };
+  const tamanhoChunk = 450;
+  let idx = 0;
+  for (let i = 0; i < texto.length; i += tamanhoChunk) {
+    metadata[`itens_${idx}`] = texto.slice(i, i + tamanhoChunk);
+    idx++;
+  }
+  metadata.itens_chunks = String(idx);
+  return metadata;
+}
+
 class PedidosController {
 
   // Cotação pública: os preços e a regra de frete vêm sempre do servidor.
@@ -270,6 +289,67 @@ class PedidosController {
         return res.status(400).json({ error: "Endereço inválido." });
       }
 
+      const stripe = getStripe();
+      if (stripe) {
+        const resumo = await calcularResumoItens(itens);
+
+        try {
+          const originHeader = req.headers.origin;
+          const hostHeader = req.headers["x-forwarded-host"] || req.headers.host;
+          const proto = req.headers["x-forwarded-proto"] || (req.secure ? "https" : "http");
+          const baseUrl = originHeader && /^https?:\/\//i.test(originHeader)
+            ? originHeader.replace(/\/$/, "")
+            : `${proto}://${hostHeader}`;
+
+          const lineItems = resumo.itens.map(item => {
+            const titulo = `${item.nome} (Tam: ${item.tamanho})${item.personalizacao ? ` - Pers: ${item.personalizacao}` : ""}`;
+            return {
+              price_data: {
+                currency: "brl",
+                unit_amount: Math.round(item.preco_unitario * 100),
+                product_data: {
+                  name: titulo.slice(0, 120),
+                },
+              },
+              quantity: item.quantidade,
+            };
+          });
+
+          if (resumo.freteCentavos > 0) {
+            lineItems.push({
+              price_data: {
+                currency: "brl",
+                unit_amount: resumo.freteCentavos,
+                product_data: {
+                  name: "Frete",
+                },
+              },
+              quantity: 1,
+            });
+          }
+
+          const session = await stripe.checkout.sessions.create({
+            mode: "payment",
+            customer_email: cliente.email,
+            line_items: lineItems,
+            metadata: {
+              cliente_id: String(cliente_id),
+              endereco_id: String(endereco.id),
+              ...serializarItensMetadata(resumo.itens),
+            },
+            success_url: `${baseUrl}/cliente.html?pagamento=sucesso`,
+            cancel_url: `${baseUrl}/checkout.html?pagamento=cancelado`,
+          });
+
+          return res.status(200).json({ checkout_url: session.url });
+        } catch (stripeErr) {
+          console.error("Erro ao criar sessão Stripe:", stripeErr);
+          return res.status(502).json({
+            error: "Não foi possível iniciar o pagamento na Stripe. Tente novamente.",
+          });
+        }
+      }
+
       transaction = await db.connection.transaction();
 
       const resumo = await calcularResumoItens(itens, {
@@ -313,81 +393,6 @@ class PedidosController {
       }
 
       await transaction.commit();
-
-      const stripe = getStripe();
-      if (stripe) {
-        try {
-          const originHeader = req.headers.origin;
-          const hostHeader = req.headers["x-forwarded-host"] || req.headers.host;
-          const proto = req.headers["x-forwarded-proto"] || (req.secure ? "https" : "http");
-          const baseUrl = originHeader && /^https?:\/\//i.test(originHeader)
-            ? originHeader.replace(/\/$/, "")
-            : `${proto}://${hostHeader}`;
-
-          const lineItems = resumo.itens.map(item => {
-            const titulo = `${item.nome} (Tam: ${item.tamanho})${item.personalizacao ? ` - Pers: ${item.personalizacao}` : ""}`;
-            return {
-              price_data: {
-                currency: "brl",
-                unit_amount: Math.round(item.preco_unitario * 100),
-                product_data: {
-                  name: titulo.slice(0, 120),
-                },
-              },
-              quantity: item.quantidade,
-            };
-          });
-
-          if (resumo.freteCentavos > 0) {
-            lineItems.push({
-              price_data: {
-                currency: "brl",
-                unit_amount: resumo.freteCentavos,
-                product_data: {
-                  name: "Frete",
-                },
-              },
-              quantity: 1,
-            });
-          }
-
-          const session = await stripe.checkout.sessions.create({
-            mode: "payment",
-            customer_email: cliente.email,
-            line_items: lineItems,
-            metadata: { pedido_id: String(pedido.id) },
-            success_url: `${baseUrl}/cliente.html?pagamento=sucesso&pedido=${pedido.id}`,
-            cancel_url: `${baseUrl}/checkout.html?pagamento=cancelado&pedido=${pedido.id}`,
-          });
-
-          await pedido.update({ stripe_session_id: session.id });
-
-          return res.status(201).json({
-            ...pedido.toJSON(),
-            checkout_url: session.url,
-          });
-        } catch (stripeErr) {
-          console.error("Erro ao criar sessão Stripe:", stripeErr);
-          const estornoTx = await db.connection.transaction();
-          try {
-            for (const item of resumo.itens) {
-              await Tamanho_prod.increment("estoque", {
-                by: item.quantidade,
-                where: { id: item.tamanho_prod_id },
-                transaction: estornoTx,
-              });
-            }
-            await pedido.update({ status: "CANCELADO" }, { transaction: estornoTx });
-            await estornoTx.commit();
-          } catch (estornoErr) {
-            await estornoTx.rollback();
-            console.error("Erro ao estornar pedido após falha da Stripe:", estornoErr);
-          }
-          return res.status(502).json({
-            error: "Não foi possível iniciar o pagamento na Stripe. Tente novamente.",
-          });
-        }
-      }
 
       return res.status(201).json(pedido);
     } catch (err) {
