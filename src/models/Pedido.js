@@ -31,9 +31,13 @@ class Pedido extends Model {
           defaultValue: 0,
         },
         endereco_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
+          type: Sequelize.INTEGER,
+          allowNull: false,
+        },
+        stripe_session_id: {
+          type: Sequelize.STRING(255),
+          allowNull: true,
+        },
       },
       {
         sequelize,

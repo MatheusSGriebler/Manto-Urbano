@@ -29,7 +29,13 @@ function mostrarSecao(nome) {
     history.replaceState(null, "", `#${nome}`);
 }
 
-// ===== PEDIDOS =====
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("pagamento") === "sucesso") {
+        localStorage.removeItem("carrinho");
+        history.replaceState(null, "", window.location.pathname);
+    }
+});
 
 async function carregarMeusPedidos() {
     const container = document.getElementById("pedidosCliente");

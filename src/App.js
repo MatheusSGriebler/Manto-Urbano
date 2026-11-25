@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import routes from "./routes.js";
+import StripeWebhookController from "./controllers/StripeWebhookController.js";
 import { jsonError } from "./middlewares/error.js";
 import "./database/index.js";
 
@@ -56,6 +57,12 @@ class App {
       }
       return callback(new Error("Origem não permitida pelo CORS."));
     }));
+    // O webhook da Stripe exige o corpo raw antes do express.json() para validar a assinatura.
+    this.server.post(
+      "/webhooks/stripe",
+      express.raw({ type: "application/json" }),
+      (req, res) => StripeWebhookController.handle(req, res)
+    );
     this.server.use(express.json({ limit: "32kb" }));
     this.server.use(jsonError);
   }

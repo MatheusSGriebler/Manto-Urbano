@@ -179,6 +179,12 @@ async function pagarPedido() {
             throw new Error(data.error || "Erro ao finalizar pedido.");
         }
 
+        if (data.checkout_url) {
+            botao.textContent = "Redirecionando para o pagamento...";
+            window.location.href = data.checkout_url;
+            return;
+        }
+
         salvarCarrinho([]);
         const total = formatarPreco(data.valor_total);
         const frete = Number(data.valor_frete) === 0
@@ -400,3 +406,16 @@ function mostrarAviso({
 function fecharAviso() {
     document.getElementById("ModalAviso")?.classList.remove("aberto");
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("pagamento") === "cancelado") {
+        mostrarAviso({
+            icone: "fa-circle-info",
+            titulo: "Pagamento cancelado",
+            texto: "O pagamento não foi concluído. Seus itens continuam salvos no carrinho para tentar novamente.",
+            botaoPrincipal: "Entendi",
+        });
+        history.replaceState(null, "", window.location.pathname);
+    }
+});

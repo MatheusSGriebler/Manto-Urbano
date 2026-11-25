@@ -9,6 +9,7 @@
     { "source": "/cadastro", "destination": "/api/index.js" },
     { "source": "/login", "destination": "/api/index.js" },
     { "source": "/verificar-email", "destination": "/api/index.js" },
-    { "source": "/enderecos(.*)", "destination": "/api/index.js" }
+    { "source": "/enderecos(.*)", "destination": "/api/index.js" },
+    { "source": "/webhooks/stripe", "destination": "/api/index.js" }
   ]
 }
