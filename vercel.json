@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "cleanUrls": true,
   "rewrites": [
     { "source": "/categorias(.*)", "destination": "/api/index.js" },
     { "source": "/ligas(.*)", "destination": "/api/index.js" },
@@ -11,6 +10,16 @@
     { "source": "/auth/login", "destination": "/api/index.js" },
     { "source": "/verificar-email", "destination": "/api/index.js" },
     { "source": "/enderecos(.*)", "destination": "/api/index.js" },
-    { "source": "/webhooks/stripe", "destination": "/api/index.js" }
+    { "source": "/webhooks/stripe", "destination": "/api/index.js" },
+    { "source": "/camisetas", "destination": "/camisetas.html" },
+    { "source": "/produto", "destination": "/produto.html" },
+    { "source": "/sac", "destination": "/sac.html" },
+    { "source": "/termos", "destination": "/termos.html" },
+    { "source": "/politica", "destination": "/politica.html" },
+    { "source": "/carrinho", "destination": "/carrinho.html" },
+    { "source": "/checkout", "destination": "/checkout.html" },
+    { "source": "/cliente", "destination": "/cliente.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/admin", "destination": "/admin.html" }
   ]
 }
