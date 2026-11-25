@@ -84,6 +84,7 @@ async function carregarProdutos(categoria, filtros = {}) {
                 <img
                     src="${escaparHtml(imagemDoProduto(produto))}"
                     alt="${escaparHtml(produto.nome)}"
+                    loading="lazy"
                 >
                 <h3>${escaparHtml(produto.nome)}</h3>
                 <h3>${precoBr(produto.preco)}</h3>
@@ -230,6 +231,7 @@ async function listarProdutos() {
                 <img
                     src="${escaparHtml(imagemDoProduto(produto))}"
                     alt="${escaparHtml(produto.nome)}"
+                    loading="lazy"
                 >
                 <h3>${escaparHtml(produto.nome)} - ${produto.id}</h3>
                 <h3>${precoBr(produto.preco)}</h3>

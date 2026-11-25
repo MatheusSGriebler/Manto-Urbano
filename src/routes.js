@@ -79,6 +79,7 @@ routes.patch("/pedidos/:id/cancelar", authMiddleware, adminMiddleware, PedidosCo
 //LOGIN
 routes.post("/cadastro", authRateLimit, authController.cadastrar);
 routes.post("/login", authRateLimit, authController.login);
+routes.post("/auth/login", authRateLimit, authController.login);
 routes.post("/verificar-email", authRateLimit, authController.verificarEmail);
 
 routes.get("/pedidos/:pedido_id/rastreio", authMiddleware, RastreioController.show);

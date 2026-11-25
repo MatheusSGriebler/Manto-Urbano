@@ -86,6 +86,14 @@ function renderizarProduto(produto) {
     }
 
     // ===== INFO BÁSICA =====
+    document.title = `${produto.nome} | Manto Urbano`;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+        metaDesc.setAttribute(
+            "content",
+            `${produto.nome}${produto.desc ? ` - ${produto.desc}` : ""}. Envio para todo o Brasil na Manto Urbano.`
+        );
+    }
     document.getElementById("produto-nome").textContent = produto.nome;
     document.getElementById("produto-desc").textContent = produto.desc ?? "";
 
