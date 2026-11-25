@@ -53,7 +53,7 @@ async function carregarMeusPedidos() {
             const itensHtml = pedido.itens.map(item => {
                 const tamanho = item.tamanho_prod?.tamanho?.nome ?? "-";
                 const nome = item.produto?.nome ?? "Produto removido";
-                return `<li>${item.quantidade}x ${escaparHtml(nome)} (Tam: ${escaparHtml(tamanho)})</li>`;
+                return `<li>${item.quantidade}x ${escaparHtml(nome)} (Tam: ${escaparHtml(tamanho)})${item.personalizacao ? ` — Pers: ${escaparHtml(item.personalizacao)}` : ""}</li>`;
             }).join("");
 
             const rastreioHtml = pedido.rastreio

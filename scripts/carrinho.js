@@ -14,9 +14,16 @@ function salvarCarrinho(carrinho) {
 
 // ===== ADICIONAR ITEM =====
 
-function adicionarAoCarrinho(produto_id, tamanho_prod_id, quantidade) {
+function normalizarPersonalizacao(valor) {
+    if (typeof valor !== "string") return null;
+    const texto = valor.trim().slice(0, 60);
+    return texto || null;
+}
 
-    console.log("DEBUG: adicionarAoCarrinho recebeu", { produto_id, tamanho_prod_id, quantidade });
+function adicionarAoCarrinho(produto_id, tamanho_prod_id, quantidade, personalizacao = null) {
+
+    const pers = normalizarPersonalizacao(personalizacao);
+    console.log("DEBUG: adicionarAoCarrinho recebeu", { produto_id, tamanho_prod_id, quantidade, personalizacao: pers });
 
     if (!tamanho_prod_id) {
         alert("Selecione um tamanho.");
@@ -31,13 +38,16 @@ function adicionarAoCarrinho(produto_id, tamanho_prod_id, quantidade) {
     const carrinho = lerCarrinho();
 
     const itemExistente = carrinho.find(
-        item => item.produto_id === produto_id && item.tamanho_prod_id === tamanho_prod_id
+        item =>
+            Number(item.produto_id) === Number(produto_id) &&
+            Number(item.tamanho_prod_id) === Number(tamanho_prod_id) &&
+            normalizarPersonalizacao(item.personalizacao) === pers
     );
 
     if (itemExistente) {
         itemExistente.quantidade += quantidade;
     } else {
-        carrinho.push({ produto_id, tamanho_prod_id, quantidade });
+        carrinho.push({ produto_id, tamanho_prod_id, quantidade, personalizacao: pers });
     }
 
     salvarCarrinho(carrinho);
@@ -79,6 +89,7 @@ async function cotarCarrinho(carrinho = lerCarrinho()) {
                 produto_id: Number(item.produto_id),
                 tamanho_prod_id: Number(item.tamanho_prod_id),
                 quantidade: Number(item.quantidade),
+                personalizacao: normalizarPersonalizacao(item.personalizacao),
             })),
         }),
     });
@@ -105,15 +116,18 @@ async function renderizarCarrinho() {
 
     try {
         const cotacao = await cotarCarrinho(carrinho);
-        tbody.innerHTML = cotacao.itens.map(item => `
+        tbody.innerHTML = cotacao.itens.map((item, index) => `
             <tr>
-                <td>${escaparHtml(item.nome)} (Tam: ${escaparHtml(item.tamanho)})</td>
+                <td>
+                    ${escaparHtml(item.nome)} (Tam: ${escaparHtml(item.tamanho)})
+                    ${item.personalizacao ? `<br><small>Personalização: ${escaparHtml(item.personalizacao)}</small>` : ""}
+                </td>
                 <td>
                     <input type="number" min="1" value="${item.quantidade}"
-                        onchange="atualizarQuantidade(${item.produto_id}, ${item.tamanho_prod_id}, this.value)">
+                        onchange="atualizarQuantidade(${index}, this.value)">
                 </td>
                 <td>${formatarPreco(item.subtotal)}</td>
-                <td><button onclick="removerDoCarrinho(${item.produto_id}, ${item.tamanho_prod_id})">
+                <td><button onclick="removerDoCarrinho(${index})">
                     <i class="fa-solid fa-trash-can" aria-label="Remover"></i>
                 </button></td>
             </tr>
@@ -159,7 +173,7 @@ function atualizarResumo(cotacao, vazio, erro = "") {
 
 // ===== ATUALIZAR QUANTIDADE =====
 
-function atualizarQuantidade(produto_id, tamanho_prod_id, novaQuantidade) {
+function atualizarQuantidade(indice, novaQuantidade) {
 
     novaQuantidade = Number(novaQuantidade);
 
@@ -171,12 +185,9 @@ function atualizarQuantidade(produto_id, tamanho_prod_id, novaQuantidade) {
 
     const carrinho = lerCarrinho();
 
-    const outrosItens = carrinho.filter(
-        i => !(Number(i.produto_id) === Number(produto_id) && Number(i.tamanho_prod_id) === Number(tamanho_prod_id))
-    );
-    if (outrosItens.length !== carrinho.length) {
-        outrosItens.push({ produto_id: Number(produto_id), tamanho_prod_id: Number(tamanho_prod_id), quantidade: novaQuantidade });
-        salvarCarrinho(outrosItens);
+    if (carrinho[indice]) {
+        carrinho[indice].quantidade = novaQuantidade;
+        salvarCarrinho(carrinho);
         renderizarCarrinho();
     }
 }
@@ -184,13 +195,10 @@ function atualizarQuantidade(produto_id, tamanho_prod_id, novaQuantidade) {
 
 // ===== REMOVER ITEM =====
 
-function removerDoCarrinho(produto_id, tamanho_prod_id) {
+function removerDoCarrinho(indice) {
 
-    let carrinho = lerCarrinho();
-
-    carrinho = carrinho.filter(
-        item => !(Number(item.produto_id) === Number(produto_id) && Number(item.tamanho_prod_id) === Number(tamanho_prod_id))
-    );
+    const carrinho = lerCarrinho();
+    carrinho.splice(indice, 1);
 
     salvarCarrinho(carrinho);
     renderizarCarrinho();

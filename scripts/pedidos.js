@@ -51,7 +51,7 @@ async function listarPedidos() {
             const itensHtml = pedido.itens.map(item => {
                 const tamanho = item.tamanho_prod?.tamanho?.nome ?? "-";
                 const nome = item.produto?.nome ?? "Produto removido";
-                return `<li>${item.quantidade}x ${escapar(nome)} (Tam: ${escapar(tamanho)})</li>`;
+                return `<li>${item.quantidade}x ${escapar(nome)} (Tam: ${escapar(tamanho)})${item.personalizacao ? ` — Pers: ${escapar(item.personalizacao)}` : ""}</li>`;
             }).join("");
 
             const e = pedido.endereco;

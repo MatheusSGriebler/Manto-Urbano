@@ -39,6 +39,11 @@ class ItensPedido extends Model {
           type: Sequelize.DECIMAL(10, 2),
           allowNull: false,
         },
+
+        personalizacao: {
+          type: Sequelize.STRING(60),
+          allowNull: true,
+        },
       },
       {
         sequelize,

@@ -15,6 +15,7 @@ const STATUS_VALIDOS = ["PENDENTE", "PAGO", "ENVIADO", "ENTREGUE", "CANCELADO"];
 const STATUS_CANCELAVEIS = ["PENDENTE", "PAGO"];
 const FRETE_FIXO_CENTAVOS = 2000;
 const QUANTIDADE_PARA_FRETE_GRATIS = 3;
+const PRECO_PERSONALIZADO_CENTAVOS = 16999;
 
 const schemaItens = Yup.array()
   .of(
@@ -22,6 +23,7 @@ const schemaItens = Yup.array()
       produto_id: Yup.number().required().positive().integer(),
       tamanho_prod_id: Yup.number().required().positive().integer(),
       quantidade: Yup.number().required().positive().integer(),
+      personalizacao: Yup.string().trim().max(60).nullable(),
     })
   )
   .min(1)
@@ -46,18 +48,29 @@ async function calcularResumoItens(itens, { transaction, bloquearEstoque = false
 
   const itensAgrupados = new Map();
   for (const item of itens) {
-    const chave = `${item.produto_id}:${item.tamanho_prod_id}`;
+    const pers = typeof item.personalizacao === "string"
+      ? item.personalizacao.trim().slice(0, 60) || null
+      : null;
+    const chave = `${item.produto_id}:${item.tamanho_prod_id}:${pers ?? ""}`;
     const existente = itensAgrupados.get(chave);
     if (existente) {
       existente.quantidade += item.quantidade;
     } else {
-      itensAgrupados.set(chave, { ...item });
+      itensAgrupados.set(chave, { ...item, personalizacao: pers });
     }
   }
 
   const itensOrdenados = [...itensAgrupados.values()].sort(
     (a, b) => a.tamanho_prod_id - b.tamanho_prod_id
   );
+
+  const quantidadePorTamanho = new Map();
+  for (const item of itensOrdenados) {
+    quantidadePorTamanho.set(
+      item.tamanho_prod_id,
+      (quantidadePorTamanho.get(item.tamanho_prod_id) ?? 0) + item.quantidade
+    );
+  }
 
   for (const item of itensOrdenados) {
     const opcoesProduto = transaction ? { transaction } : {};
@@ -85,11 +98,15 @@ async function calcularResumoItens(itens, { transaction, bloquearEstoque = false
       );
     }
 
-    if (tamanhoProd.estoque < item.quantidade) {
+    const qtdTotalTamanho = quantidadePorTamanho.get(item.tamanho_prod_id) ?? item.quantidade;
+    if (tamanhoProd.estoque < qtdTotalTamanho) {
       throw new ErroNegocio(`Estoque insuficiente para o produto ${produto.nome}.`);
     }
 
-    const precoCentavos = Math.round(Number(produto.preco) * 100);
+    const precoBaseCentavos = Math.round(Number(produto.preco) * 100);
+    const precoCentavos = item.personalizacao
+      ? Math.max(precoBaseCentavos, PRECO_PERSONALIZADO_CENTAVOS)
+      : precoBaseCentavos;
     const subtotalItemCentavos = precoCentavos * item.quantidade;
     subtotalCentavos += subtotalItemCentavos;
     quantidadeTotal += item.quantidade;
@@ -99,6 +116,7 @@ async function calcularResumoItens(itens, { transaction, bloquearEstoque = false
       tamanho_prod_id: tamanhoProd.id,
       nome: produto.nome,
       tamanho: tamanhoProd.tamanho?.nome ?? "-",
+      personalizacao: item.personalizacao,
       quantidade: item.quantidade,
       preco_unitario: precoCentavos / 100,
       subtotal: subtotalItemCentavos / 100,
@@ -286,6 +304,7 @@ class PedidosController {
             quantidade: item.quantidade,
             preco_unitario: item.preco_unitario,
             subtotal: item.subtotal,
+            personalizacao: item.personalizacao ?? null,
           },
           { transaction }
         );

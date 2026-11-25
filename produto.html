@@ -85,6 +85,21 @@
                     <span id="estoque-info"></span>
                 </div>
 
+                <div class="campo personalizacao-box">
+                    <label class="check-personalizacao">
+                        <input type="checkbox" id="check-personalizacao">
+                        <span>Personalizar com nome e número (R$ 169,99)</span>
+                    </label>
+                    <div id="campo-personalizacao" style="display: none;">
+                        <input
+                            type="text"
+                            id="input-personalizacao"
+                            maxlength="60"
+                            placeholder="Ex: NEYMAR 10"
+                        >
+                    </div>
+                </div>
+
                 <button id="btn-adicionar" onclick="adicionarProdutoAtualAoCarrinho()">
                     ADICIONAR AO CARRINHO
                 </button>

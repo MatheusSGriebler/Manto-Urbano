@@ -92,6 +92,25 @@ function renderizarProduto(produto) {
     const precoFormatado = Number(produto.preco).toFixed(2).replace(".", ",");
     document.getElementById("produto-preco").textContent = `R$ ${precoFormatado}`;
 
+    const checkPers = document.getElementById("check-personalizacao");
+    const campoPers = document.getElementById("campo-personalizacao");
+    const inputPers = document.getElementById("input-personalizacao");
+    if (checkPers && campoPers && inputPers) {
+        checkPers.checked = false;
+        inputPers.value = "";
+        campoPers.style.display = "none";
+
+        checkPers.onchange = () => {
+            campoPers.style.display = checkPers.checked ? "block" : "none";
+            if (!checkPers.checked) inputPers.value = "";
+            const valorExibido = checkPers.checked
+                ? Math.max(Number(produto.preco), 169.99)
+                : Number(produto.preco);
+            document.getElementById("produto-preco").textContent =
+                `R$ ${valorExibido.toFixed(2).replace(".", ",")}`;
+        };
+    }
+
     // ===== SELECT DE TAMANHOS =====
     const tamanhos = (produto.tamanhos ?? []).filter(t => t.estoque > 0);
     const selectTamanho = document.getElementById("select-tamanho");
@@ -172,8 +191,20 @@ function adicionarProdutoAtualAoCarrinho() {
         return;
     }
 
+    const checkPers = document.getElementById("check-personalizacao");
+    const inputPers = document.getElementById("input-personalizacao");
+    let personalizacao = null;
+    if (checkPers?.checked) {
+        personalizacao = inputPers?.value.trim() ?? "";
+        if (!personalizacao) {
+            alert("Informe o nome e/ou número para a personalização.");
+            inputPers?.focus();
+            return;
+        }
+    }
+
     console.log("DEBUG: chamando adicionarAoCarrinho...");
-    adicionarAoCarrinho(produtoAtual.id, tamanho_prod_id, quantidade);
+    adicionarAoCarrinho(produtoAtual.id, tamanho_prod_id, quantidade, personalizacao);
 }
 
 document.addEventListener("DOMContentLoaded", carregarProduto);

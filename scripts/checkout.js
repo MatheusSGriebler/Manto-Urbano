@@ -162,6 +162,7 @@ async function pagarPedido() {
                     produto_id: Number(item.produto_id),
                     tamanho_prod_id: Number(item.tamanho_prod_id),
                     quantidade: Number(item.quantidade),
+                    personalizacao: normalizarPersonalizacao(item.personalizacao),
                 })),
             }),
         });
@@ -219,7 +220,7 @@ async function renderizarResumo() {
         const cotacao = await cotarCarrinho(carrinho);
         lista.innerHTML = cotacao.itens.map(item => `
             <div class="resumo-item">
-                <span>${item.quantidade}x ${escaparHtml(item.nome)} (Tam: ${escaparHtml(item.tamanho)})</span>
+                <span>${item.quantidade}x ${escaparHtml(item.nome)} (Tam: ${escaparHtml(item.tamanho)})${item.personalizacao ? ` — Pers: ${escaparHtml(item.personalizacao)}` : ""}</span>
                 <span>${formatarPreco(item.subtotal)}</span>
             </div>
         `).join("");
