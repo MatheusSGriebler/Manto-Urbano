@@ -48,10 +48,32 @@ function atualizarMenuUsuario() {
 
     if (estaLogado()) {
         const cliente = getClienteLogado();
+        const primeiroNome = String(cliente?.nome ?? "").trim().split(" ")[0] || "Conta";
 
         linkUsuario.href = "/cliente.html";
-        linkUsuario.innerHTML = `<i class="fa-solid fa-user"></i> ${cliente.nome.split(" ")[0]}`;
+        linkUsuario.replaceChildren();
+        const icone = document.createElement("i");
+        icone.className = "fa-solid fa-user";
+        linkUsuario.append(icone, ` ${primeiroNome}`);
         // sem onclick de logout aqui — o link normal já leva pra cliente.html
+
+        const menuDireito = linkUsuario.closest(".menu-right");
+        if (isAdmin() && menuDireito && !menuDireito.querySelector(".menu-admin-item")) {
+            const liAdmin = document.createElement("li");
+            liAdmin.className = "menu-admin-item";
+
+            const linkAdmin = document.createElement("a");
+            linkAdmin.href = "/admin.html";
+            linkAdmin.className = "menu-admin-link";
+            linkAdmin.setAttribute("aria-label", "Painel Admin");
+
+            const iconeAdmin = document.createElement("i");
+            iconeAdmin.className = "fa-solid fa-shield-halved";
+            linkAdmin.append(iconeAdmin, " Admin");
+
+            liAdmin.appendChild(linkAdmin);
+            menuDireito.appendChild(liAdmin);
+        }
     }
 }
 function getRole() {

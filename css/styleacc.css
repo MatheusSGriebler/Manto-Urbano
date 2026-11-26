@@ -134,6 +134,30 @@ body {
     color: #4b4b4b;
 }
 
+.menu-right .menu-admin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid #c8fb3a;
+    border-radius: 8px;
+    color: #c8fb3a;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu-right .menu-admin-link:hover {
+    background-color: #c8fb3a;
+    color: #131520;
+}
+
+.menu-right .menu-admin-link:hover i {
+    color: #131520;
+}
+
 /* Logo central */
 .logo {
     position: absolute;
