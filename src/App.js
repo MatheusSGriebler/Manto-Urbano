@@ -19,7 +19,7 @@ class App {
       res.setHeader("X-Content-Type-Options", "nosniff");
       res.setHeader("X-Frame-Options", "DENY");
       res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-      res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation()");
+      res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
 
       const rotaPrivada = /^\/(pedidos|enderecos|cadastro|login|auth\/login|verificar-email)/.test(req.path);
       if (rotaPrivada) {

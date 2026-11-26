@@ -1,3 +1,7 @@
+#conteudo-produto {
+    min-height: 75vh;
+}
+
 .produto-detalhe {
     display: flex;
     gap: 40px;
@@ -17,6 +21,7 @@ h2{
 
 #imagem-principal {
     width: 100%;
+    aspect-ratio: 1 / 1;
     border-radius: 8px;
     object-fit: cover;
 }
