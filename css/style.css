@@ -8,7 +8,7 @@
 body {
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
-    background-image: url('/imgs/background.png');
+    background-image: url('/imgs/background.webp');
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -236,21 +236,28 @@ body {
     margin-bottom: 15px;
 }
 
-.card button {
+.card button,
+.card .btn-ver {
+    display: inline-block;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
-    background-color: rgb(168, 168, 168);
-    color: white;
-    border: none;
-    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    background-color: #24293d;
+    color: #ffffff;
+    border: 1px solid #c8fb3a;
+    padding: 10px 22px;
     border-radius: 8px;
     cursor: pointer;
     margin: 5px;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.card button:hover {
-    background-color: rgb(48, 48, 48);
+.card button:hover,
+.card .btn-ver:hover {
+    background-color: #c8fb3a;
+    color: #131520;
 }
 
 #about .stomp{
@@ -448,6 +455,7 @@ body {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 28px;
     max-width: 1200px;
+    min-height: 360px;
     margin: 0 auto 60px;
     padding: 0 20px;
 }

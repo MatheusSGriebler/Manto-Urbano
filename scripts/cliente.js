@@ -138,7 +138,7 @@ async function carregarEnderecosConta() {
                     <strong>${escaparHtml(e.identificacao)}</strong><br>
                     ${escaparHtml(e.nome_recebedor)}<br>
                     ${escaparHtml(e.endereco)}, ${escaparHtml(e.numero)} ${escaparHtml(e.complemento ?? "")}<br>
-                    ${escaparHtml(e.bairro)} - ${escaparHtml(e.cidade)}/${escaparHtml(e.estado)} · CEP ${escaparHtml(e.cep)}
+                    ${escaparHtml(e.bairro)} - ${escaparHtml(e.cidade)}/${escaparHtml(e.estado)} · CEP ${escaparHtml(String(e.cep ?? "").replace(/^(\d{5})(\d{3})$/, "$1-$2"))}
                 </div>
                 <button type="button" class="btn-remover" onclick="removerEndereco(${e.id})">Remover</button>
             </div>

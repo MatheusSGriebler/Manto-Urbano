@@ -12,4 +12,4 @@ Disallow: /login
 Disallow: /login.html
 Disallow: /api/
 
-Sitemap: https://manto-urbano.vercel.app/sitemap.xml
+Sitemap: https://mantourbano.foxlabs.com.br/sitemap.xml

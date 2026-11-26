@@ -13,6 +13,21 @@ class App {
   }
 
   middlewares() {
+    this.server.disable("x-powered-by");
+
+    this.server.use((req, res, next) => {
+      res.setHeader("X-Content-Type-Options", "nosniff");
+      res.setHeader("X-Frame-Options", "DENY");
+      res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+      res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation()");
+
+      const rotaPrivada = /^\/(pedidos|enderecos|cadastro|login|auth\/login|verificar-email)/.test(req.path);
+      if (rotaPrivada) {
+        res.setHeader("Cache-Control", "private, no-store");
+      }
+      next();
+    });
+
     const trustProxyHops = process.env.TRUST_PROXY_HOPS;
     if (trustProxyHops !== undefined) {
       const hops = Number(trustProxyHops);

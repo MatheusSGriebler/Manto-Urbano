@@ -67,6 +67,18 @@ h2{
     padding: 60px 20px;
     color: #ffffff;
 }
+
+.produto-erro a {
+    display: inline-block;
+    margin-top: 14px;
+    color: #c8fb3a;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.produto-erro a:hover {
+    text-decoration: underline;
+}
 /* ===== SELEÇÃO DE TAMANHO E QUANTIDADE ===== */
 
 .campo {

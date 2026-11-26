@@ -1,4 +1,4 @@
-import { Op } from "sequelize";
+import { Op, fn, col, where as seqWhere } from "sequelize";
 
 // a ordenação vem de uma lista fechada: nunca usa o texto da URL como coluna
 const ORDENACOES = {
@@ -19,17 +19,29 @@ function escaparLike(texto) {
   return texto.replace(/[\\%_]/g, "\\$&");
 }
 
+function removerAcentos(texto) {
+  return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 export function montarFiltrosProdutos(query = {}) {
   const where = {};
 
   const busca = String(query.busca ?? "").trim().slice(0, 60);
   if (busca) {
-    const termo = `%${escaparLike(busca)}%`;
-    const opBusca = (process.env.DB_DIALECT || "postgres") === "postgres" ? Op.iLike : Op.like;
-    where[Op.or] = [
-      { nome: { [opBusca]: termo } },
-      { desc: { [opBusca]: termo } },
-    ];
+    const ehPostgres = (process.env.DB_DIALECT || "postgres") === "postgres";
+    if (ehPostgres) {
+      const termo = `%${escaparLike(removerAcentos(busca))}%`;
+      where[Op.or] = [
+        seqWhere(fn("unaccent", col("Produtos.nome")), { [Op.iLike]: termo }),
+        seqWhere(fn("unaccent", col("Produtos.desc")), { [Op.iLike]: termo }),
+      ];
+    } else {
+      const termo = `%${escaparLike(busca)}%`;
+      where[Op.or] = [
+        { nome: { [Op.like]: termo } },
+        { desc: { [Op.like]: termo } },
+      ];
+    }
   }
 
   let min = numeroOuNull(query.preco_min);
