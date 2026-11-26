@@ -21,6 +21,16 @@
     color: #c8fb3a;
 }
 
+#menu h2 .logo-admin {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+#menu h2 .logo-admin:hover {
+    opacity: 0.8;
+}
+
 .submenuA {
     list-style: none;
     padding: 0;
