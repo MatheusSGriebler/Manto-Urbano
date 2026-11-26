@@ -8,7 +8,12 @@
 body {
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
+    background-color: #131520;
     background-image: url('/imgs/background.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
