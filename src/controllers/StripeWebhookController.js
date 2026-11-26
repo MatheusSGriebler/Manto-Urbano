@@ -98,7 +98,7 @@ async function confirmarPagamento(session) {
 class StripeWebhookController {
   async handle(req, res) {
     const stripe = getStripe();
-    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
 
     if (!stripe || !webhookSecret) {
       return res.status(500).json({ error: "Webhook da Stripe não configurado." });
